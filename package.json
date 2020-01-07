@@ -1,0 +1,36 @@
+{
+  "name": "@ngrx/component",
+  "version": "8.6.0+10.sha-b8a769a",
+  "description": "Reactive utilities for components",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngrx/platform.git"
+  },
+  "keywords": [
+    "Angular",
+    "Redux",
+    "NgRx",
+    "Schematics",
+    "Angular CLI"
+  ],
+  "author": "NgRx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngrx/platform/issues"
+  },
+  "homepage": "https://github.com/ngrx/platform#readme",
+  "peerDependencies": {
+    "@angular/common": "^9.0.0-rc.0",
+    "@angular/core": "^9.0.0-rc.0",
+    "rxjs": "^6.5.3"
+  },
+  "sideEffects": false,
+  "main": "./bundles/component.umd.js",
+  "fesm5": "./fesm5/component.js",
+  "fesm2015": "./fesm2015/component.js",
+  "esm5": "./esm5/component.js",
+  "esm2015": "./esm2015/component.js",
+  "typings": "./component.d.ts",
+  "module": "./fesm5/component.js",
+  "es2015": "./fesm2015/component.js"
+}
