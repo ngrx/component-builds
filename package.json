@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/component",
-  "version": "8.6.0+19.sha-2620fbb",
+  "version": "8.6.0+20.sha-fe2b190",
   "description": "Reactive utilities for components",
   "repository": {
     "type": "git",
