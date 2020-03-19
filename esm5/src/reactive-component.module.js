@@ -1,0 +1,19 @@
+import { __decorate } from "tslib";
+import { NgModule } from '@angular/core';
+import { LetDirective } from './let';
+import { PushPipe } from './push';
+var DECLARATIONS = [LetDirective, PushPipe];
+var EXPORTS = [DECLARATIONS];
+var ReactiveComponentModule = /** @class */ (function () {
+    function ReactiveComponentModule() {
+    }
+    ReactiveComponentModule = __decorate([
+        NgModule({
+            declarations: [DECLARATIONS],
+            exports: [EXPORTS],
+        })
+    ], ReactiveComponentModule);
+    return ReactiveComponentModule;
+}());
+export { ReactiveComponentModule };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicmVhY3RpdmUtY29tcG9uZW50Lm1vZHVsZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL21vZHVsZXMvY29tcG9uZW50L3NyYy9yZWFjdGl2ZS1jb21wb25lbnQubW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxZQUFZLEVBQUUsTUFBTSxPQUFPLENBQUM7QUFDckMsT0FBTyxFQUFFLFFBQVEsRUFBRSxNQUFNLFFBQVEsQ0FBQztBQUVsQyxJQUFNLFlBQVksR0FBRyxDQUFDLFlBQVksRUFBRSxRQUFRLENBQUMsQ0FBQztBQUM5QyxJQUFNLE9BQU8sR0FBRyxDQUFDLFlBQVksQ0FBQyxDQUFDO0FBTS9CO0lBQUE7SUFBc0MsQ0FBQztJQUExQix1QkFBdUI7UUFKbkMsUUFBUSxDQUFDO1lBQ1IsWUFBWSxFQUFFLENBQUMsWUFBWSxDQUFDO1lBQzVCLE9BQU8sRUFBRSxDQUFDLE9BQU8sQ0FBQztTQUNuQixDQUFDO09BQ1csdUJBQXVCLENBQUc7SUFBRCw4QkFBQztDQUFBLEFBQXZDLElBQXVDO1NBQTFCLHVCQUF1QiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IE5nTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBMZXREaXJlY3RpdmUgfSBmcm9tICcuL2xldCc7XG5pbXBvcnQgeyBQdXNoUGlwZSB9IGZyb20gJy4vcHVzaCc7XG5cbmNvbnN0IERFQ0xBUkFUSU9OUyA9IFtMZXREaXJlY3RpdmUsIFB1c2hQaXBlXTtcbmNvbnN0IEVYUE9SVFMgPSBbREVDTEFSQVRJT05TXTtcblxuQE5nTW9kdWxlKHtcbiAgZGVjbGFyYXRpb25zOiBbREVDTEFSQVRJT05TXSxcbiAgZXhwb3J0czogW0VYUE9SVFNdLFxufSlcbmV4cG9ydCBjbGFzcyBSZWFjdGl2ZUNvbXBvbmVudE1vZHVsZSB7fVxuIl19
