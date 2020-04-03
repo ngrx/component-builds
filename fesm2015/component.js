@@ -1,10 +1,10 @@
 /**
- * @license NgRx 9.0.0+17.sha-19f1bda
+ * @license NgRx 9.0.0+18.sha-468303a
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
 import { ɵmarkDirty, ɵdetectChanges, Pipe, ChangeDetectorRef, NgZone, Directive, TemplateRef, ViewContainerRef, Input, NgModule } from '@angular/core';
-import { isObservable, of, from, Subject, ReplaySubject, EMPTY } from 'rxjs';
+import { of, from, Subject, ReplaySubject, EMPTY } from 'rxjs';
 import { distinctUntilChanged, map, tap, switchAll, withLatestFrom, filter, startWith, catchError } from 'rxjs/operators';
 
 /**
@@ -103,72 +103,6 @@ function getDetectChanges(ngZone, cdRef) {
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/utils/typing.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} value
- * @return {?}
- */
-function isPromiseGuard(value) {
-    return (!!value &&
-        typeof ((/** @type {?} */ (value))).subscribe !== 'function' &&
-        typeof ((/** @type {?} */ (value))).then === 'function');
-}
-/**
- * @template T
- * @param {?} potentialObservable
- * @return {?}
- */
-function isObservableGuard(potentialObservable) {
-    return isObservable(potentialObservable);
-}
-/**
- * @template T
- * @param {?} op
- * @return {?}
- */
-function isOperateFnArrayGuard(op) {
-    return op.every((/**
-     * @param {?} i
-     * @return {?}
-     */
-    (i) => typeof i !== 'string'));
-}
-/**
- * @param {?} op
- * @return {?}
- */
-function isStringArrayGuard(op) {
-    return op.every((/**
-     * @param {?} i
-     * @return {?}
-     */
-    (i) => typeof i !== 'string'));
-}
-/**
- * @template T
- * @param {?} opr
- * @return {?}
- */
-function isDefinedGuard(opr) {
-    return !!opr;
-}
-/**
- * @template T
- * @param {?} obj
- * @return {?}
- */
-function isIterableGuard(obj) {
-    if (obj === undefined) {
-        return false;
-    }
-    return typeof ((/** @type {?} */ (obj)))[Symbol.iterator] === 'function';
-}
-
-/**
- * @fileoverview added by tsickle
  * Generated from: modules/component/src/core/utils/index.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
@@ -184,20 +118,7 @@ function isIterableGuard(obj) {
  * @return {?}
  */
 function toObservableValue(p) {
-    // Comparing to the literal null value with the == operator covers both null and undefined values.
-    if (p === null) {
-        return of(p);
-    }
-    if (p === undefined) {
-        return of(p);
-    }
-    if (isObservableGuard(p)) {
-        return p;
-    }
-    if (isPromiseGuard(p)) {
-        return from(p);
-    }
-    throw new Error('Argument not observable. Only null/undefined or Promise/Observable-like values are allowed.');
+    return p == null ? of(p) : from(p);
 }
 
 /**
@@ -274,11 +195,7 @@ function createCdAware(cfg) {
     // Ignore potential observables of the same instances
     distinctUntilChanged(), 
     // Try to convert it to values, throw if not possible
-    map((/**
-     * @param {?} v
-     * @return {?}
-     */
-    v => toObservableValue(v))), tap((/**
+    map(toObservableValue), tap((/**
      * @param {?} v
      * @return {?}
      */

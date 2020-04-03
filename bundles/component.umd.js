@@ -1,5 +1,5 @@
 /**
- * @license NgRx 9.0.0+17.sha-19f1bda
+ * @license NgRx 9.0.0+18.sha-468303a
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -62,45 +62,8 @@
         }
     }
 
-    function isPromiseGuard(value) {
-        return (!!value &&
-            typeof value.subscribe !== 'function' &&
-            typeof value.then === 'function');
-    }
-    function isObservableGuard(potentialObservable) {
-        return rxjs.isObservable(potentialObservable);
-    }
-    function isOperateFnArrayGuard(op) {
-        return op.every(function (i) { return typeof i !== 'string'; });
-    }
-    function isStringArrayGuard(op) {
-        return op.every(function (i) { return typeof i !== 'string'; });
-    }
-    function isDefinedGuard(opr) {
-        return !!opr;
-    }
-    function isIterableGuard(obj) {
-        if (obj === undefined) {
-            return false;
-        }
-        return typeof obj[Symbol.iterator] === 'function';
-    }
-
     function toObservableValue(p) {
-        // Comparing to the literal null value with the == operator covers both null and undefined values.
-        if (p === null) {
-            return rxjs.of(p);
-        }
-        if (p === undefined) {
-            return rxjs.of(p);
-        }
-        if (isObservableGuard(p)) {
-            return p;
-        }
-        if (isPromiseGuard(p)) {
-            return rxjs.from(p);
-        }
-        throw new Error('Argument not observable. Only null/undefined or Promise/Observable-like values are allowed.');
+        return p == null ? rxjs.of(p) : rxjs.from(p);
     }
 
     function setUpWork(cfg) {
@@ -124,7 +87,7 @@
         // Ignore potential observables of the same instances
         operators.distinctUntilChanged(), 
         // Try to convert it to values, throw if not possible
-        operators.map(function (v) { return toObservableValue(v); }), operators.tap(function (v) {
+        operators.map(toObservableValue), operators.tap(function (v) {
             cfg.resetContextObserver.next(v);
             cfg.work();
         }), operators.map(function (value$) {
