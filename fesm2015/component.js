@@ -1,5 +1,5 @@
 /**
- * @license NgRx 9.0.0+15.sha-c0dd2e5
+ * @license NgRx 9.0.0+16.sha-09a50de
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -549,7 +549,7 @@ if (false) {
  * ### Examples
  *
  * The `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template
- * `<ng-container *let="observableNumber$ as c"></ng-container>`
+ * `<ng-container *ngrxLet="observableNumber$ as c"></ng-container>`
  *
  * ```html
  * <ng-container *ngrxLet="observableNumber$ as n">
