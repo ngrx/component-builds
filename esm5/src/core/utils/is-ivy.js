@@ -1,13 +1,35 @@
 import { getGlobalThis } from './get-global-this';
-// Table for ng global presence in ViewEngine and Ivy for prod/dev modes:
-//
-// | render     |  ViewEngine    |  ViewEngine    |      Ivy          |      Ivy          |
-// | mode       |     prod       |      dev       |      prod         |      dev          |
-// | ng         |     present    |     present    |     undefined     |     present       |
-// | ng.probe   |     present    |     present    |     undefined     |     undefined     |
-//
-// So for Ivy we need to make sure that ng is undefined or,
-// in case of dev environment, ng.probe is undefined
+/**
+ * @description
+ *
+ * Determines if the application runs with ivy or not (ViewEngine)
+ *
+ * @returns {boolean} - true if the application runs with ivy, false if the application runs with ViewEngine
+ *
+ * @usageNotes
+ *
+ * The function can be just imported and used everywhere.
+ *
+ * ```ts
+ * import { isIvy } from `utils/is-ivy`;
+ *
+ * console.log(isIvy());  // true or false
+ * ```
+ *
+ * The determination if an application runs with Ivy or not is done by following table:
+ *
+ * **Table for ng global presence in ViewEngine and Ivy for prod/dev modes**
+ *
+ *  | render   | ViewEngine | ViewEngine | Ivy       | Ivy       |
+ *  | -------- | ---------- | ---------- | --------- | --------  |
+ *  | mode     | prod       | dev        | prod      | dev       |
+ *  | ng       | present    | present    | undefined | present   |
+ *  | ng.probe | present    | present    | undefined | undefined |
+ *
+ *  > So for Ivy we need to make sure that ng is undefined or,
+ *  > in case of dev environment, ng.probe is undefined
+ *
+ */
 export function isIvy() {
     var ng = getGlobalThis().ng;
     // Is the global ng object is unavailable?
@@ -18,4 +40,4 @@ export function isIvy() {
         // `probe` property is available on ng object we use View Engine.
         ng.probe === undefined);
 }
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaXMtaXZ5LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vbW9kdWxlcy9jb21wb25lbnQvc3JjL2NvcmUvdXRpbHMvaXMtaXZ5LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxhQUFhLEVBQUUsTUFBTSxtQkFBbUIsQ0FBQztBQUVsRCx5RUFBeUU7QUFDekUsRUFBRTtBQUNGLDJGQUEyRjtBQUMzRiwyRkFBMkY7QUFDM0YsMkZBQTJGO0FBQzNGLDJGQUEyRjtBQUMzRixFQUFFO0FBQ0YsMkRBQTJEO0FBQzNELG9EQUFvRDtBQUVwRCxNQUFNLFVBQVUsS0FBSztJQUNuQixJQUFNLEVBQUUsR0FBUSxhQUFhLEVBQUUsQ0FBQyxFQUFFLENBQUM7SUFFbkMsMENBQTBDO0lBQzFDLDBDQUEwQztJQUMxQyw4RUFBOEU7SUFDOUUsT0FBTyxDQUNMLEVBQUUsS0FBSyxTQUFTO1FBQ2hCLG9DQUFvQztRQUNwQyxpRUFBaUU7UUFDakUsRUFBRSxDQUFDLEtBQUssS0FBSyxTQUFTLENBQ3ZCLENBQUM7QUFDSixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgZ2V0R2xvYmFsVGhpcyB9IGZyb20gJy4vZ2V0LWdsb2JhbC10aGlzJztcblxuLy8gVGFibGUgZm9yIG5nIGdsb2JhbCBwcmVzZW5jZSBpbiBWaWV3RW5naW5lIGFuZCBJdnkgZm9yIHByb2QvZGV2IG1vZGVzOlxuLy9cbi8vIHwgcmVuZGVyICAgICB8ICBWaWV3RW5naW5lICAgIHwgIFZpZXdFbmdpbmUgICAgfCAgICAgIEl2eSAgICAgICAgICB8ICAgICAgSXZ5ICAgICAgICAgIHxcbi8vIHwgbW9kZSAgICAgICB8ICAgICBwcm9kICAgICAgIHwgICAgICBkZXYgICAgICAgfCAgICAgIHByb2QgICAgICAgICB8ICAgICAgZGV2ICAgICAgICAgIHxcbi8vIHwgbmcgICAgICAgICB8ICAgICBwcmVzZW50ICAgIHwgICAgIHByZXNlbnQgICAgfCAgICAgdW5kZWZpbmVkICAgICB8ICAgICBwcmVzZW50ICAgICAgIHxcbi8vIHwgbmcucHJvYmUgICB8ICAgICBwcmVzZW50ICAgIHwgICAgIHByZXNlbnQgICAgfCAgICAgdW5kZWZpbmVkICAgICB8ICAgICB1bmRlZmluZWQgICAgIHxcbi8vXG4vLyBTbyBmb3IgSXZ5IHdlIG5lZWQgdG8gbWFrZSBzdXJlIHRoYXQgbmcgaXMgdW5kZWZpbmVkIG9yLFxuLy8gaW4gY2FzZSBvZiBkZXYgZW52aXJvbm1lbnQsIG5nLnByb2JlIGlzIHVuZGVmaW5lZFxuXG5leHBvcnQgZnVuY3Rpb24gaXNJdnkoKTogYm9vbGVhbiB7XG4gIGNvbnN0IG5nOiBhbnkgPSBnZXRHbG9iYWxUaGlzKCkubmc7XG5cbiAgLy8gSXMgdGhlIGdsb2JhbCBuZyBvYmplY3QgaXMgdW5hdmFpbGFibGU/XG4gIC8vIG5nID09PSB1bmRlZmluZWQgaW4gSXZ5IHByb2R1Y3Rpb24gbW9kZVxuICAvLyBWaWV3IEVuZ2luZSBoYXMgdGhlIG5nIG9iamVjdCBib3RoIGluIGRldmVsb3BtZW50IG1vZGUgYW5kIHByb2R1Y3Rpb24gbW9kZS5cbiAgcmV0dXJuIChcbiAgICBuZyA9PT0gdW5kZWZpbmVkIHx8XG4gICAgLy8gaW4gY2FzZSB3ZSBhcmUgaW4gZGV2IG1vZGUgaW4gaXZ5XG4gICAgLy8gYHByb2JlYCBwcm9wZXJ0eSBpcyBhdmFpbGFibGUgb24gbmcgb2JqZWN0IHdlIHVzZSBWaWV3IEVuZ2luZS5cbiAgICBuZy5wcm9iZSA9PT0gdW5kZWZpbmVkXG4gICk7XG59XG4iXX0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaXMtaXZ5LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vbW9kdWxlcy9jb21wb25lbnQvc3JjL2NvcmUvdXRpbHMvaXMtaXZ5LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxhQUFhLEVBQUUsTUFBTSxtQkFBbUIsQ0FBQztBQUVsRDs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0dBOEJHO0FBQ0gsTUFBTSxVQUFVLEtBQUs7SUFDbkIsSUFBTSxFQUFFLEdBQVEsYUFBYSxFQUFFLENBQUMsRUFBRSxDQUFDO0lBRW5DLDBDQUEwQztJQUMxQywwQ0FBMEM7SUFDMUMsOEVBQThFO0lBQzlFLE9BQU8sQ0FDTCxFQUFFLEtBQUssU0FBUztRQUNoQixvQ0FBb0M7UUFDcEMsaUVBQWlFO1FBQ2pFLEVBQUUsQ0FBQyxLQUFLLEtBQUssU0FBUyxDQUN2QixDQUFDO0FBQ0osQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IGdldEdsb2JhbFRoaXMgfSBmcm9tICcuL2dldC1nbG9iYWwtdGhpcyc7XG5cbi8qKlxuICogQGRlc2NyaXB0aW9uXG4gKlxuICogRGV0ZXJtaW5lcyBpZiB0aGUgYXBwbGljYXRpb24gcnVucyB3aXRoIGl2eSBvciBub3QgKFZpZXdFbmdpbmUpXG4gKlxuICogQHJldHVybnMge2Jvb2xlYW59IC0gdHJ1ZSBpZiB0aGUgYXBwbGljYXRpb24gcnVucyB3aXRoIGl2eSwgZmFsc2UgaWYgdGhlIGFwcGxpY2F0aW9uIHJ1bnMgd2l0aCBWaWV3RW5naW5lXG4gKlxuICogQHVzYWdlTm90ZXNcbiAqXG4gKiBUaGUgZnVuY3Rpb24gY2FuIGJlIGp1c3QgaW1wb3J0ZWQgYW5kIHVzZWQgZXZlcnl3aGVyZS5cbiAqXG4gKiBgYGB0c1xuICogaW1wb3J0IHsgaXNJdnkgfSBmcm9tIGB1dGlscy9pcy1pdnlgO1xuICpcbiAqIGNvbnNvbGUubG9nKGlzSXZ5KCkpOyAgLy8gdHJ1ZSBvciBmYWxzZVxuICogYGBgXG4gKlxuICogVGhlIGRldGVybWluYXRpb24gaWYgYW4gYXBwbGljYXRpb24gcnVucyB3aXRoIEl2eSBvciBub3QgaXMgZG9uZSBieSBmb2xsb3dpbmcgdGFibGU6XG4gKlxuICogKipUYWJsZSBmb3IgbmcgZ2xvYmFsIHByZXNlbmNlIGluIFZpZXdFbmdpbmUgYW5kIEl2eSBmb3IgcHJvZC9kZXYgbW9kZXMqKlxuICpcbiAqICB8IHJlbmRlciAgIHwgVmlld0VuZ2luZSB8IFZpZXdFbmdpbmUgfCBJdnkgICAgICAgfCBJdnkgICAgICAgfFxuICogIHwgLS0tLS0tLS0gfCAtLS0tLS0tLS0tIHwgLS0tLS0tLS0tLSB8IC0tLS0tLS0tLSB8IC0tLS0tLS0tICB8XG4gKiAgfCBtb2RlICAgICB8IHByb2QgICAgICAgfCBkZXYgICAgICAgIHwgcHJvZCAgICAgIHwgZGV2ICAgICAgIHxcbiAqICB8IG5nICAgICAgIHwgcHJlc2VudCAgICB8IHByZXNlbnQgICAgfCB1bmRlZmluZWQgfCBwcmVzZW50ICAgfFxuICogIHwgbmcucHJvYmUgfCBwcmVzZW50ICAgIHwgcHJlc2VudCAgICB8IHVuZGVmaW5lZCB8IHVuZGVmaW5lZCB8XG4gKlxuICogID4gU28gZm9yIEl2eSB3ZSBuZWVkIHRvIG1ha2Ugc3VyZSB0aGF0IG5nIGlzIHVuZGVmaW5lZCBvcixcbiAqICA+IGluIGNhc2Ugb2YgZGV2IGVudmlyb25tZW50LCBuZy5wcm9iZSBpcyB1bmRlZmluZWRcbiAqXG4gKi9cbmV4cG9ydCBmdW5jdGlvbiBpc0l2eSgpOiBib29sZWFuIHtcbiAgY29uc3Qgbmc6IGFueSA9IGdldEdsb2JhbFRoaXMoKS5uZztcblxuICAvLyBJcyB0aGUgZ2xvYmFsIG5nIG9iamVjdCBpcyB1bmF2YWlsYWJsZT9cbiAgLy8gbmcgPT09IHVuZGVmaW5lZCBpbiBJdnkgcHJvZHVjdGlvbiBtb2RlXG4gIC8vIFZpZXcgRW5naW5lIGhhcyB0aGUgbmcgb2JqZWN0IGJvdGggaW4gZGV2ZWxvcG1lbnQgbW9kZSBhbmQgcHJvZHVjdGlvbiBtb2RlLlxuICByZXR1cm4gKFxuICAgIG5nID09PSB1bmRlZmluZWQgfHxcbiAgICAvLyBpbiBjYXNlIHdlIGFyZSBpbiBkZXYgbW9kZSBpbiBpdnlcbiAgICAvLyBgcHJvYmVgIHByb3BlcnR5IGlzIGF2YWlsYWJsZSBvbiBuZyBvYmplY3Qgd2UgdXNlIFZpZXcgRW5naW5lLlxuICAgIG5nLnByb2JlID09PSB1bmRlZmluZWRcbiAgKTtcbn1cbiJdfQ==

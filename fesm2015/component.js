@@ -1,5 +1,5 @@
 /**
- * @license NgRx 9.1.0+5.sha-81292b7
+ * @license NgRx 9.1.0+6.sha-79ec1b4
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -12,11 +12,24 @@ import { distinctUntilChanged, map, tap, switchAll, withLatestFrom, filter, star
  * Generated from: modules/component/src/core/utils/get-global-this.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-// Returns a reference to global thin
-// - Browser
-// - SSR
-// - Tests
 /**
+ * \@description
+ *
+ * This function returns a reference to globalThis in the following environments:
+ * - Browser
+ * - SSR (Server Side Rendering)
+ * - Tests
+ *
+ *
+ * \@usageNotes
+ *
+ * The function can be just imported and used everywhere.
+ *
+ * ```ts
+ * import { getGlobalThis } from `utils/get-global-this`;
+ *
+ * console.log(getGlobalThis());
+ * ```
  * @return {?}
  */
 function getGlobalThis() {
@@ -28,16 +41,35 @@ function getGlobalThis() {
  * Generated from: modules/component/src/core/utils/is-ivy.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-// Table for ng global presence in ViewEngine and Ivy for prod/dev modes:
-//
-// | render     |  ViewEngine    |  ViewEngine    |      Ivy          |      Ivy          |
-// | mode       |     prod       |      dev       |      prod         |      dev          |
-// | ng         |     present    |     present    |     undefined     |     present       |
-// | ng.probe   |     present    |     present    |     undefined     |     undefined     |
-//
-// So for Ivy we need to make sure that ng is undefined or,
-// in case of dev environment, ng.probe is undefined
 /**
+ * \@description
+ *
+ * Determines if the application runs with ivy or not (ViewEngine)
+ *
+ *
+ * \@usageNotes
+ *
+ * The function can be just imported and used everywhere.
+ *
+ * ```ts
+ * import { isIvy } from `utils/is-ivy`;
+ *
+ * console.log(isIvy());  // true or false
+ * ```
+ *
+ * The determination if an application runs with Ivy or not is done by following table:
+ *
+ * **Table for ng global presence in ViewEngine and Ivy for prod/dev modes**
+ *
+ *  | render   | ViewEngine | ViewEngine | Ivy       | Ivy       |
+ *  | -------- | ---------- | ---------- | --------- | --------  |
+ *  | mode     | prod       | dev        | prod      | dev       |
+ *  | ng       | present    | present    | undefined | present   |
+ *  | ng.probe | present    | present    | undefined | undefined |
+ *
+ *  > So for Ivy we need to make sure that ng is undefined or,
+ *  > in case of dev environment, ng.probe is undefined
+ *
  * @return {?}
  */
 function isIvy() {
@@ -58,6 +90,20 @@ function isIvy() {
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
+ * \@description
+ *
+ * Determines if the application uses `NgZone` or `NgNoopZone` as ngZone service instance.
+ *
+ *
+ * \@usageNotes
+ *
+ * The function can be just imported and used everywhere.
+ *
+ * ```ts
+ * import { hasZone } from `utils/has-zone`;
+ *
+ * console.log(hasZone());
+ * ```
  * @param {?} z
  * @return {?}
  */
@@ -67,7 +113,49 @@ function hasZone(z) {
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/utils/get-change-detection-handling.ts
+ * Generated from: modules/component/src/core/utils/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: modules/component/src/core/projections/toObservableValue.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * \@description
+ *
+ * This operator ensures the passed value is of the right type for `CdAware`.
+ * It takes `null`, `undefined` or `Observable<T>` and returns `Observable<null, undefined, T>`.
+ * Every other value throws an error.
+ *
+ *
+ * \@usageNotes
+ *
+ * ```ts
+ * import { toObservableValue } from `projections/toObservableValue`;
+ *
+ * const toObservableValue()
+ *  .pipe(switchAll())
+ *  .subscribe((n) => console.log(n););
+ * ```
+ * @template T
+ * @param {?} p
+ * @return {?}
+ */
+function toObservableValue(p) {
+    return p == null ? of(p) : from(p);
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: modules/component/src/core/projections/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: modules/component/src/core/cd-aware/get-change-detection-handling.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
@@ -85,51 +173,10 @@ function getChangeDetectionHandler(ngZone, cdRef) {
             : cdRef.detectChanges.bind(cdRef);
     }
 }
-/**
- * @param {?} ngZone
- * @param {?} cdRef
- * @return {?}
- */
-function getDetectChanges(ngZone, cdRef) {
-    if (isIvy()) {
-        return !hasZone(ngZone) ? ɵdetectChanges : ɵmarkDirty;
-    }
-    else {
-        return hasZone(ngZone)
-            ? cdRef.markForCheck.bind(cdRef)
-            : cdRef.detectChanges.bind(cdRef);
-    }
-}
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/utils/index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/projections/toObservableValue.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} p
- * @return {?}
- */
-function toObservableValue(p) {
-    return p == null ? of(p) : from(p);
-}
-
-/**
- * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/projections/index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/cd-aware.abstract.ts
+ * Generated from: modules/component/src/core/cd-aware/cd-aware_creator.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
@@ -188,12 +235,8 @@ function setUpWork(cfg) {
 function createCdAware(cfg) {
     /** @type {?} */
     const observablesSubject = new Subject();
-    // We have to defer the setup of observables$ until subscription as getConfigurableBehaviour is defined in the
-    // extending class. So getConfigurableBehaviour is not available in the abstract layer
     /** @type {?} */
-    const observables$ = observablesSubject.pipe(
-    // Ignore potential observables of the same instances
-    distinctUntilChanged(), 
+    const observables$ = observablesSubject.pipe(distinctUntilChanged(), 
     // Try to convert it to values, throw if not possible
     map(toObservableValue), tap((/**
      * @param {?} v
@@ -206,13 +249,7 @@ function createCdAware(cfg) {
      * @param {?} value$
      * @return {?}
      */
-    value$ => value$.pipe(distinctUntilChanged(), tap(cfg.updateViewContextObserver)))), 
-    // e.g. coalescing
-    cfg.configurableBehaviour, 
-    // Unsubscribe from previous observables
-    // Then flatten the latest internal observables into the output
-    // @NOTICE applied behaviour (on the values, not the observable) will fire here
-    switchAll(), tap((/**
+    value$ => value$.pipe(distinctUntilChanged(), tap(cfg.updateViewContextObserver)))), cfg.configurableBehaviour, switchAll(), tap((/**
      * @return {?}
      */
     () => cfg.work())));
@@ -235,6 +272,12 @@ function createCdAware(cfg) {
 
 /**
  * @fileoverview added by tsickle
+ * Generated from: modules/component/src/core/cd-aware/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
  * Generated from: modules/component/src/core/index.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
@@ -246,6 +289,7 @@ function createCdAware(cfg) {
  */
 /**
  * \@Pipe PushPipe
+ *
  * \@description
  *
  * The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.
@@ -276,8 +320,6 @@ function createCdAware(cfg) {
  *
  * \@usageNotes
  *
- * ### Examples
- *
  * `ngrxPush` pipe solves that problem. It can be used like shown here:
  * ```html
  * {{observable$ | ngrxPush}}
@@ -299,7 +341,6 @@ class PushPipe {
             .asObservable()
             .pipe(distinctUntilChanged());
         this.updateViewContextObserver = {
-            // assign value that will get returned from the transform function on the next change detection
             next: (/**
              * @param {?} value
              * @return {?}
@@ -323,8 +364,6 @@ class PushPipe {
          * @return {?}
          */
         ([value$, config]) => {
-            // As discussed with Brandon we keep it here
-            // because in the beta we implement configuration behavior here
             return value$.pipe();
         }))));
         this.cdAware = createCdAware({
@@ -463,8 +502,6 @@ if (false) {
  *
  * \@usageNotes
  *
- * ### Examples
- *
  * The `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template
  * `<ng-container *ngrxLet="observableNumber$ as c"></ng-container>`
  *
@@ -529,7 +566,6 @@ class LetDirective {
              * @return {?}
              */
             () => {
-                // if not initialized no need to set undefined
                 if (this.embeddedView) {
                     this.ViewContext.$implicit = undefined;
                     this.ViewContext.ngrxLet = undefined;
@@ -544,7 +580,6 @@ class LetDirective {
              * @return {?}
              */
             (value) => {
-                // to have init lazy
                 if (!this.embeddedView) {
                     this.createEmbeddedView();
                 }
@@ -556,7 +591,6 @@ class LetDirective {
              * @return {?}
              */
             (error) => {
-                // to have init lazy
                 if (!this.embeddedView) {
                     this.createEmbeddedView();
                 }
@@ -566,7 +600,6 @@ class LetDirective {
              * @return {?}
              */
             () => {
-                // to have init lazy
                 if (!this.embeddedView) {
                     this.createEmbeddedView();
                 }
@@ -578,9 +611,7 @@ class LetDirective {
          * @param {?} o$
          * @return {?}
          */
-        (o$) => o$.pipe(withLatestFrom(this.config$), 
-        // @NOTICE: unused config => As discussed with Brandon we keep it here because in the beta release we implement configuration behavior here
-        map((/**
+        (o$) => o$.pipe(withLatestFrom(this.config$), map((/**
          * @param {?} __0
          * @return {?}
          */

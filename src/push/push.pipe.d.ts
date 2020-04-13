@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { CoalescingConfig as PushPipeConfig } from '../core';
 /**
  * @Pipe PushPipe
+ *
  * @description
  *
  * The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.
@@ -32,8 +33,6 @@ import { CoalescingConfig as PushPipeConfig } from '../core';
  *  - Coalescing of change detection calls to boost performance
  *
  * @usageNotes
- *
- * ### Examples
  *
  * `ngrxPush` pipe solves that problem. It can be used like shown here:
  * ```html

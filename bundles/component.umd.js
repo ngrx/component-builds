@@ -1,5 +1,5 @@
 /**
- * @license NgRx 9.1.0+5.sha-81292b7
+ * @license NgRx 9.1.0+6.sha-79ec1b4
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -9,23 +9,61 @@
     (global = global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.component = {}), global.tslib, global.ng.core, global.rxjs, global.rxjs.operators));
 }(this, (function (exports, tslib, core, rxjs, operators) { 'use strict';
 
-    // Returns a reference to global thin
-    // - Browser
-    // - SSR
-    // - Tests
+    /**
+     * @description
+     *
+     * This function returns a reference to globalThis in the following environments:
+     * - Browser
+     * - SSR (Server Side Rendering)
+     * - Tests
+     *
+     * @returns {any} - the reference to globalThis in the current environment.
+     *
+     * @usageNotes
+     *
+     * The function can be just imported and used everywhere.
+     *
+     * ```ts
+     * import { getGlobalThis } from `utils/get-global-this`;
+     *
+     * console.log(getGlobalThis());
+     * ```
+     */
     function getGlobalThis() {
         return (globalThis || self || window);
     }
 
-    // Table for ng global presence in ViewEngine and Ivy for prod/dev modes:
-    //
-    // | render     |  ViewEngine    |  ViewEngine    |      Ivy          |      Ivy          |
-    // | mode       |     prod       |      dev       |      prod         |      dev          |
-    // | ng         |     present    |     present    |     undefined     |     present       |
-    // | ng.probe   |     present    |     present    |     undefined     |     undefined     |
-    //
-    // So for Ivy we need to make sure that ng is undefined or,
-    // in case of dev environment, ng.probe is undefined
+    /**
+     * @description
+     *
+     * Determines if the application runs with ivy or not (ViewEngine)
+     *
+     * @returns {boolean} - true if the application runs with ivy, false if the application runs with ViewEngine
+     *
+     * @usageNotes
+     *
+     * The function can be just imported and used everywhere.
+     *
+     * ```ts
+     * import { isIvy } from `utils/is-ivy`;
+     *
+     * console.log(isIvy());  // true or false
+     * ```
+     *
+     * The determination if an application runs with Ivy or not is done by following table:
+     *
+     * **Table for ng global presence in ViewEngine and Ivy for prod/dev modes**
+     *
+     *  | render   | ViewEngine | ViewEngine | Ivy       | Ivy       |
+     *  | -------- | ---------- | ---------- | --------- | --------  |
+     *  | mode     | prod       | dev        | prod      | dev       |
+     *  | ng       | present    | present    | undefined | present   |
+     *  | ng.probe | present    | present    | undefined | undefined |
+     *
+     *  > So for Ivy we need to make sure that ng is undefined or,
+     *  > in case of dev environment, ng.probe is undefined
+     *
+     */
     function isIvy() {
         var ng = getGlobalThis().ng;
         // Is the global ng object is unavailable?
@@ -37,8 +75,50 @@
             ng.probe === undefined);
     }
 
+    /**
+     * @description
+     *
+     * Determines if the application uses `NgZone` or `NgNoopZone` as ngZone service instance.
+     *
+     * @param {NgZone} z - The zone service to check.
+     * @returns {boolean} - true if the application runs with `NgZone`, false if the application runs with `NgNoopZone`
+     *
+     * @usageNotes
+     *
+     * The function can be just imported and used everywhere.
+     *
+     * ```ts
+     * import { hasZone } from `utils/has-zone`;
+     *
+     * console.log(hasZone());
+     * ```
+     */
     function hasZone(z) {
         return z.constructor.name !== 'NoopNgZone';
+    }
+
+    /**
+     * @description
+     *
+     * This operator ensures the passed value is of the right type for `CdAware`.
+     * It takes `null`, `undefined` or `Observable<T>` and returns `Observable<null, undefined, T>`.
+     * Every other value throws an error.
+     *
+     * @param {Observable<T> | Promise<T> | undefined | null} p -
+     * @returns {Observable<T| undefined | null>} - proper observable values
+     *
+     * @usageNotes
+     *
+     * ```ts
+     * import { toObservableValue } from `projections/toObservableValue`;
+     *
+     * const toObservableValue()
+     *  .pipe(switchAll())
+     *  .subscribe((n) => console.log(n););
+     * ```
+     */
+    function toObservableValue(p) {
+        return p == null ? rxjs.of(p) : rxjs.from(p);
     }
 
     function getChangeDetectionHandler(ngZone, cdRef) {
@@ -50,20 +130,6 @@
                 ? cdRef.markForCheck.bind(cdRef)
                 : cdRef.detectChanges.bind(cdRef);
         }
-    }
-    function getDetectChanges(ngZone, cdRef) {
-        if (isIvy()) {
-            return !hasZone(ngZone) ? core.ɵdetectChanges : core.ɵmarkDirty;
-        }
-        else {
-            return hasZone(ngZone)
-                ? cdRef.markForCheck.bind(cdRef)
-                : cdRef.detectChanges.bind(cdRef);
-        }
-    }
-
-    function toObservableValue(p) {
-        return p == null ? rxjs.of(p) : rxjs.from(p);
     }
 
     function setUpWork(cfg) {
@@ -81,24 +147,14 @@
      */
     function createCdAware(cfg) {
         var observablesSubject = new rxjs.Subject();
-        // We have to defer the setup of observables$ until subscription as getConfigurableBehaviour is defined in the
-        // extending class. So getConfigurableBehaviour is not available in the abstract layer
-        var observables$ = observablesSubject.pipe(
-        // Ignore potential observables of the same instances
-        operators.distinctUntilChanged(), 
+        var observables$ = observablesSubject.pipe(operators.distinctUntilChanged(), 
         // Try to convert it to values, throw if not possible
         operators.map(toObservableValue), operators.tap(function (v) {
             cfg.resetContextObserver.next(v);
             cfg.work();
         }), operators.map(function (value$) {
             return value$.pipe(operators.distinctUntilChanged(), operators.tap(cfg.updateViewContextObserver));
-        }), 
-        // e.g. coalescing
-        cfg.configurableBehaviour, 
-        // Unsubscribe from previous observables
-        // Then flatten the latest internal observables into the output
-        // @NOTICE applied behaviour (on the values, not the observable) will fire here
-        operators.switchAll(), operators.tap(function () { return cfg.work(); }));
+        }), cfg.configurableBehaviour, operators.switchAll(), operators.tap(function () { return cfg.work(); }));
         return {
             next: function (value) {
                 observablesSubject.next(value);
@@ -111,6 +167,7 @@
 
     /**
      * @Pipe PushPipe
+     *
      * @description
      *
      * The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.
@@ -141,8 +198,6 @@
      *
      * @usageNotes
      *
-     * ### Examples
-     *
      * `ngrxPush` pipe solves that problem. It can be used like shown here:
      * ```html
      * {{observable$ | ngrxPush}}
@@ -160,7 +215,6 @@
                 .asObservable()
                 .pipe(operators.distinctUntilChanged());
             this.updateViewContextObserver = {
-                // assign value that will get returned from the transform function on the next change detection
                 next: function (value) { return (_this.renderedValue = value); },
             };
             this.resetContextObserver = {
@@ -169,8 +223,6 @@
             this.configurableBehaviour = function (o$) {
                 return o$.pipe(operators.withLatestFrom(_this.config$), operators.map(function (_a) {
                     var _b = tslib.__read(_a, 2), value$ = _b[0], config = _b[1];
-                    // As discussed with Brandon we keep it here
-                    // because in the beta we implement configuration behavior here
                     return value$.pipe();
                 }));
             };
@@ -232,8 +284,6 @@
      *
      * @usageNotes
      *
-     * ### Examples
-     *
      * The `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template
      * `<ng-container *ngrxLet="observableNumber$ as c"></ng-container>`
      *
@@ -285,7 +335,6 @@
             this.config$ = this.configSubject.pipe(operators.filter(function (v) { return v !== undefined && v !== null; }), operators.distinctUntilChanged(), operators.startWith({ optimized: true }));
             this.resetContextObserver = {
                 next: function () {
-                    // if not initialized no need to set undefined
                     if (_this.embeddedView) {
                         _this.ViewContext.$implicit = undefined;
                         _this.ViewContext.ngrxLet = undefined;
@@ -296,7 +345,6 @@
             };
             this.updateViewContextObserver = {
                 next: function (value) {
-                    // to have init lazy
                     if (!_this.embeddedView) {
                         _this.createEmbeddedView();
                     }
@@ -304,14 +352,12 @@
                     _this.ViewContext.ngrxLet = value;
                 },
                 error: function (error) {
-                    // to have init lazy
                     if (!_this.embeddedView) {
                         _this.createEmbeddedView();
                     }
                     _this.ViewContext.$error = true;
                 },
                 complete: function () {
-                    // to have init lazy
                     if (!_this.embeddedView) {
                         _this.createEmbeddedView();
                     }
@@ -319,9 +365,7 @@
                 },
             };
             this.configurableBehaviour = function (o$) {
-                return o$.pipe(operators.withLatestFrom(_this.config$), 
-                // @NOTICE: unused config => As discussed with Brandon we keep it here because in the beta release we implement configuration behavior here
-                operators.map(function (_a) {
+                return o$.pipe(operators.withLatestFrom(_this.config$), operators.map(function (_a) {
                     var _b = tslib.__read(_a, 2), value$ = _b[0], config = _b[1];
                     return value$.pipe(operators.catchError(function (e) { return rxjs.EMPTY; }));
                 }));

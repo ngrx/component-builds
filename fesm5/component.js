@@ -1,5 +1,5 @@
 /**
- * @license NgRx 9.1.0+5.sha-81292b7
+ * @license NgRx 9.1.0+6.sha-79ec1b4
  * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
  * License: MIT
  */
@@ -8,23 +8,61 @@ import { ɵmarkDirty, ɵdetectChanges, Pipe, ChangeDetectorRef, NgZone, Input, D
 import { of, from, Subject, ReplaySubject, EMPTY } from 'rxjs';
 import { distinctUntilChanged, map, tap, switchAll, withLatestFrom, filter, startWith, catchError } from 'rxjs/operators';
 
-// Returns a reference to global thin
-// - Browser
-// - SSR
-// - Tests
+/**
+ * @description
+ *
+ * This function returns a reference to globalThis in the following environments:
+ * - Browser
+ * - SSR (Server Side Rendering)
+ * - Tests
+ *
+ * @returns {any} - the reference to globalThis in the current environment.
+ *
+ * @usageNotes
+ *
+ * The function can be just imported and used everywhere.
+ *
+ * ```ts
+ * import { getGlobalThis } from `utils/get-global-this`;
+ *
+ * console.log(getGlobalThis());
+ * ```
+ */
 function getGlobalThis() {
     return (globalThis || self || window);
 }
 
-// Table for ng global presence in ViewEngine and Ivy for prod/dev modes:
-//
-// | render     |  ViewEngine    |  ViewEngine    |      Ivy          |      Ivy          |
-// | mode       |     prod       |      dev       |      prod         |      dev          |
-// | ng         |     present    |     present    |     undefined     |     present       |
-// | ng.probe   |     present    |     present    |     undefined     |     undefined     |
-//
-// So for Ivy we need to make sure that ng is undefined or,
-// in case of dev environment, ng.probe is undefined
+/**
+ * @description
+ *
+ * Determines if the application runs with ivy or not (ViewEngine)
+ *
+ * @returns {boolean} - true if the application runs with ivy, false if the application runs with ViewEngine
+ *
+ * @usageNotes
+ *
+ * The function can be just imported and used everywhere.
+ *
+ * ```ts
+ * import { isIvy } from `utils/is-ivy`;
+ *
+ * console.log(isIvy());  // true or false
+ * ```
+ *
+ * The determination if an application runs with Ivy or not is done by following table:
+ *
+ * **Table for ng global presence in ViewEngine and Ivy for prod/dev modes**
+ *
+ *  | render   | ViewEngine | ViewEngine | Ivy       | Ivy       |
+ *  | -------- | ---------- | ---------- | --------- | --------  |
+ *  | mode     | prod       | dev        | prod      | dev       |
+ *  | ng       | present    | present    | undefined | present   |
+ *  | ng.probe | present    | present    | undefined | undefined |
+ *
+ *  > So for Ivy we need to make sure that ng is undefined or,
+ *  > in case of dev environment, ng.probe is undefined
+ *
+ */
 function isIvy() {
     var ng = getGlobalThis().ng;
     // Is the global ng object is unavailable?
@@ -36,8 +74,50 @@ function isIvy() {
         ng.probe === undefined);
 }
 
+/**
+ * @description
+ *
+ * Determines if the application uses `NgZone` or `NgNoopZone` as ngZone service instance.
+ *
+ * @param {NgZone} z - The zone service to check.
+ * @returns {boolean} - true if the application runs with `NgZone`, false if the application runs with `NgNoopZone`
+ *
+ * @usageNotes
+ *
+ * The function can be just imported and used everywhere.
+ *
+ * ```ts
+ * import { hasZone } from `utils/has-zone`;
+ *
+ * console.log(hasZone());
+ * ```
+ */
 function hasZone(z) {
     return z.constructor.name !== 'NoopNgZone';
+}
+
+/**
+ * @description
+ *
+ * This operator ensures the passed value is of the right type for `CdAware`.
+ * It takes `null`, `undefined` or `Observable<T>` and returns `Observable<null, undefined, T>`.
+ * Every other value throws an error.
+ *
+ * @param {Observable<T> | Promise<T> | undefined | null} p -
+ * @returns {Observable<T| undefined | null>} - proper observable values
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * import { toObservableValue } from `projections/toObservableValue`;
+ *
+ * const toObservableValue()
+ *  .pipe(switchAll())
+ *  .subscribe((n) => console.log(n););
+ * ```
+ */
+function toObservableValue(p) {
+    return p == null ? of(p) : from(p);
 }
 
 function getChangeDetectionHandler(ngZone, cdRef) {
@@ -49,20 +129,6 @@ function getChangeDetectionHandler(ngZone, cdRef) {
             ? cdRef.markForCheck.bind(cdRef)
             : cdRef.detectChanges.bind(cdRef);
     }
-}
-function getDetectChanges(ngZone, cdRef) {
-    if (isIvy()) {
-        return !hasZone(ngZone) ? ɵdetectChanges : ɵmarkDirty;
-    }
-    else {
-        return hasZone(ngZone)
-            ? cdRef.markForCheck.bind(cdRef)
-            : cdRef.detectChanges.bind(cdRef);
-    }
-}
-
-function toObservableValue(p) {
-    return p == null ? of(p) : from(p);
 }
 
 function setUpWork(cfg) {
@@ -80,24 +146,14 @@ function setUpWork(cfg) {
  */
 function createCdAware(cfg) {
     var observablesSubject = new Subject();
-    // We have to defer the setup of observables$ until subscription as getConfigurableBehaviour is defined in the
-    // extending class. So getConfigurableBehaviour is not available in the abstract layer
-    var observables$ = observablesSubject.pipe(
-    // Ignore potential observables of the same instances
-    distinctUntilChanged(), 
+    var observables$ = observablesSubject.pipe(distinctUntilChanged(), 
     // Try to convert it to values, throw if not possible
     map(toObservableValue), tap(function (v) {
         cfg.resetContextObserver.next(v);
         cfg.work();
     }), map(function (value$) {
         return value$.pipe(distinctUntilChanged(), tap(cfg.updateViewContextObserver));
-    }), 
-    // e.g. coalescing
-    cfg.configurableBehaviour, 
-    // Unsubscribe from previous observables
-    // Then flatten the latest internal observables into the output
-    // @NOTICE applied behaviour (on the values, not the observable) will fire here
-    switchAll(), tap(function () { return cfg.work(); }));
+    }), cfg.configurableBehaviour, switchAll(), tap(function () { return cfg.work(); }));
     return {
         next: function (value) {
             observablesSubject.next(value);
@@ -110,6 +166,7 @@ function createCdAware(cfg) {
 
 /**
  * @Pipe PushPipe
+ *
  * @description
  *
  * The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.
@@ -140,8 +197,6 @@ function createCdAware(cfg) {
  *
  * @usageNotes
  *
- * ### Examples
- *
  * `ngrxPush` pipe solves that problem. It can be used like shown here:
  * ```html
  * {{observable$ | ngrxPush}}
@@ -159,7 +214,6 @@ var PushPipe = /** @class */ (function () {
             .asObservable()
             .pipe(distinctUntilChanged());
         this.updateViewContextObserver = {
-            // assign value that will get returned from the transform function on the next change detection
             next: function (value) { return (_this.renderedValue = value); },
         };
         this.resetContextObserver = {
@@ -168,8 +222,6 @@ var PushPipe = /** @class */ (function () {
         this.configurableBehaviour = function (o$) {
             return o$.pipe(withLatestFrom(_this.config$), map(function (_a) {
                 var _b = __read(_a, 2), value$ = _b[0], config = _b[1];
-                // As discussed with Brandon we keep it here
-                // because in the beta we implement configuration behavior here
                 return value$.pipe();
             }));
         };
@@ -231,8 +283,6 @@ var PushPipe = /** @class */ (function () {
  *
  * @usageNotes
  *
- * ### Examples
- *
  * The `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template
  * `<ng-container *ngrxLet="observableNumber$ as c"></ng-container>`
  *
@@ -284,7 +334,6 @@ var LetDirective = /** @class */ (function () {
         this.config$ = this.configSubject.pipe(filter(function (v) { return v !== undefined && v !== null; }), distinctUntilChanged(), startWith({ optimized: true }));
         this.resetContextObserver = {
             next: function () {
-                // if not initialized no need to set undefined
                 if (_this.embeddedView) {
                     _this.ViewContext.$implicit = undefined;
                     _this.ViewContext.ngrxLet = undefined;
@@ -295,7 +344,6 @@ var LetDirective = /** @class */ (function () {
         };
         this.updateViewContextObserver = {
             next: function (value) {
-                // to have init lazy
                 if (!_this.embeddedView) {
                     _this.createEmbeddedView();
                 }
@@ -303,14 +351,12 @@ var LetDirective = /** @class */ (function () {
                 _this.ViewContext.ngrxLet = value;
             },
             error: function (error) {
-                // to have init lazy
                 if (!_this.embeddedView) {
                     _this.createEmbeddedView();
                 }
                 _this.ViewContext.$error = true;
             },
             complete: function () {
-                // to have init lazy
                 if (!_this.embeddedView) {
                     _this.createEmbeddedView();
                 }
@@ -318,9 +364,7 @@ var LetDirective = /** @class */ (function () {
             },
         };
         this.configurableBehaviour = function (o$) {
-            return o$.pipe(withLatestFrom(_this.config$), 
-            // @NOTICE: unused config => As discussed with Brandon we keep it here because in the beta release we implement configuration behavior here
-            map(function (_a) {
+            return o$.pipe(withLatestFrom(_this.config$), map(function (_a) {
                 var _b = __read(_a, 2), value$ = _b[0], config = _b[1];
                 return value$.pipe(catchError(function (e) { return EMPTY; }));
             }));
