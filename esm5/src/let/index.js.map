@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"ng://@ngrx/component/","sources":["src/let/index.ts"],"names":[],"mappings":";;;;;AAAA,6BAAc,iBAAiB,CAAC","sourcesContent":["export * from './let.directive';\n"]}

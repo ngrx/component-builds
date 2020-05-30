@@ -3,8 +3,6 @@
  *
  * Determines if the application runs with ivy or not (ViewEngine)
  *
- * @returns {boolean} - true if the application runs with ivy, false if the application runs with ViewEngine
- *
  * @usageNotes
  *
  * The function can be just imported and used everywhere.

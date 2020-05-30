@@ -1,4 +1,9 @@
-export * from './utils';
-export * from './projections';
-export * from './cd-aware';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi8uLi8uLi8uLi9tb2R1bGVzL2NvbXBvbmVudC9zcmMvY29yZS9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxjQUFjLFNBQVMsQ0FBQztBQUN4QixjQUFjLGVBQWUsQ0FBQztBQUM5QixjQUFjLFlBQVksQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCAqIGZyb20gJy4vdXRpbHMnO1xuZXhwb3J0ICogZnJvbSAnLi9wcm9qZWN0aW9ucyc7XG5leHBvcnQgKiBmcm9tICcuL2NkLWF3YXJlJztcbiJdfQ==
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/core/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+export { getGlobalThis, isIvy, hasZone } from './utils';
+export { toObservableValue } from './projections';
+export { getChangeDetectionHandler, setUpWork, createCdAware } from './cd-aware';
+//# sourceMappingURL=index.js.map

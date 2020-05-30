@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"ng://@ngrx/component/","sources":["src/core/index.ts"],"names":[],"mappings":";;;;;AAAA,8CAAc,SAAS,CAAC;AACxB,kCAAc,eAAe,CAAC;AAC9B,oEAAc,YAAY,CAAC","sourcesContent":["export * from './utils';\nexport * from './projections';\nexport * from './cd-aware';\n"]}

@@ -1,15 +1,10 @@
-/**
- * @license NgRx 9.2.0+2.sha-aba7368
- * (c) 2015-2018 Brandon Roberts, Mike Ryan, Rob Wormald, Victor Savkin
- * License: MIT
- */
 import { ɵmarkDirty, ɵdetectChanges, Pipe, ChangeDetectorRef, NgZone, Directive, TemplateRef, ViewContainerRef, Input, NgModule } from '@angular/core';
-import { of, from, Subject, ReplaySubject, EMPTY } from 'rxjs';
+import { from, of, Subject, ReplaySubject, EMPTY } from 'rxjs';
 import { distinctUntilChanged, map, tap, switchAll, withLatestFrom, filter, startWith, catchError } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/utils/get-global-this.ts
+ * Generated from: src/core/utils/get-global-this.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
@@ -19,9 +14,6 @@ import { distinctUntilChanged, map, tap, switchAll, withLatestFrom, filter, star
  * - Browser
  * - SSR (Server Side Rendering)
  * - Tests
- *
- *
- * \@usageNotes
  *
  * The function can be just imported and used everywhere.
  *
@@ -38,14 +30,13 @@ function getGlobalThis() {
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/utils/is-ivy.ts
+ * Generated from: src/core/utils/is-ivy.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * \@description
  *
  * Determines if the application runs with ivy or not (ViewEngine)
- *
  *
  * \@usageNotes
  *
@@ -86,16 +77,13 @@ function isIvy() {
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/utils/has-zone.ts
+ * Generated from: src/core/utils/has-zone.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * \@description
  *
  * Determines if the application uses `NgZone` or `NgNoopZone` as ngZone service instance.
- *
- *
- * \@usageNotes
  *
  * The function can be just imported and used everywhere.
  *
@@ -113,13 +101,13 @@ function hasZone(z) {
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/utils/index.ts
+ * Generated from: src/core/utils/index.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/projections/toObservableValue.ts
+ * Generated from: src/core/projections/toObservableValue.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
@@ -128,9 +116,6 @@ function hasZone(z) {
  * This operator ensures the passed value is of the right type for `CdAware`.
  * It takes `null`, `undefined` or `Observable<T>` and returns `Observable<null, undefined, T>`.
  * Every other value throws an error.
- *
- *
- * \@usageNotes
  *
  * ```ts
  * import { toObservableValue } from `projections/toObservableValue`;
@@ -144,18 +129,18 @@ function hasZone(z) {
  * @return {?}
  */
 function toObservableValue(p) {
-    return p == null ? of(p) : from(p);
+    return p ? from(p) : of(p);
 }
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/projections/index.ts
+ * Generated from: src/core/projections/index.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/cd-aware/get-change-detection-handling.ts
+ * Generated from: src/core/cd-aware/get-change-detection-handling.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
@@ -176,7 +161,7 @@ function getChangeDetectionHandler(ngZone, cdRef) {
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/cd-aware/cd-aware_creator.ts
+ * Generated from: src/core/cd-aware/cd-aware_creator.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
@@ -238,7 +223,11 @@ function createCdAware(cfg) {
     /** @type {?} */
     const observables$ = observablesSubject.pipe(distinctUntilChanged(), 
     // Try to convert it to values, throw if not possible
-    map(toObservableValue), tap((/**
+    map((/**
+     * @param {?} v
+     * @return {?}
+     */
+    (v) => toObservableValue(v))), tap((/**
      * @param {?} v
      * @return {?}
      */
@@ -272,19 +261,19 @@ function createCdAware(cfg) {
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/cd-aware/index.ts
+ * Generated from: src/core/cd-aware/index.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/core/index.ts
+ * Generated from: src/core/index.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/push/push.pipe.ts
+ * Generated from: src/push/push.pipe.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
@@ -396,7 +385,7 @@ class PushPipe {
     }
 }
 PushPipe.decorators = [
-    { type: Pipe, args: [{ name: 'ngrxPush', pure: false },] }
+    { type: Pipe, args: [{ name: 'ngrxPush', pure: false },] },
 ];
 /** @nocollapse */
 PushPipe.ctorParameters = () => [
@@ -448,13 +437,13 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/push/index.ts
+ * Generated from: src/push/index.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/let/let.directive.ts
+ * Generated from: src/let/let.directive.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
@@ -672,7 +661,7 @@ class LetDirective {
     }
 }
 LetDirective.decorators = [
-    { type: Directive, args: [{ selector: '[ngrxLet]' },] }
+    { type: Directive, args: [{ selector: '[ngrxLet]' },] },
 ];
 /** @nocollapse */
 LetDirective.ctorParameters = () => [
@@ -745,13 +734,13 @@ if (false) {
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/let/index.ts
+ * Generated from: src/let/index.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/reactive-component.module.ts
+ * Generated from: src/reactive-component.module.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
@@ -764,30 +753,32 @@ ReactiveComponentModule.decorators = [
     { type: NgModule, args: [{
                 declarations: [DECLARATIONS],
                 exports: [EXPORTS],
-            },] }
+            },] },
 ];
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/src/index.ts
+ * Generated from: src/index.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/public_api.ts
+ * Generated from: public_api.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * Generated from: modules/component/index.ts
+ * Generated from: index.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
- * Generated bundle index. Do not edit.
+ * @fileoverview added by tsickle
+ * Generated from: ngrx-component.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LetDirective, PushPipe, ReactiveComponentModule };
-//# sourceMappingURL=component.js.map
+//# sourceMappingURL=ngrx-component.js.map

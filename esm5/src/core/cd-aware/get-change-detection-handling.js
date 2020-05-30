@@ -1,6 +1,16 @@
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/core/cd-aware/get-change-detection-handling.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 import { ɵdetectChanges as detectChanges, ɵmarkDirty as markDirty, } from '@angular/core';
 import { isIvy } from '../utils/is-ivy';
 import { hasZone } from '../utils/has-zone';
+/**
+ * @param {?} ngZone
+ * @param {?} cdRef
+ * @return {?}
+ */
 export function getChangeDetectionHandler(ngZone, cdRef) {
     if (isIvy()) {
         return hasZone(ngZone) ? markDirty : detectChanges;
@@ -11,4 +21,4 @@ export function getChangeDetectionHandler(ngZone, cdRef) {
             : cdRef.detectChanges.bind(cdRef);
     }
 }
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ2V0LWNoYW5nZS1kZXRlY3Rpb24taGFuZGxpbmcuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi8uLi8uLi8uLi8uLi9tb2R1bGVzL2NvbXBvbmVudC9zcmMvY29yZS9jZC1hd2FyZS9nZXQtY2hhbmdlLWRldGVjdGlvbi1oYW5kbGluZy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBR0wsY0FBYyxJQUFJLGFBQWEsRUFDL0IsVUFBVSxJQUFJLFNBQVMsR0FDeEIsTUFBTSxlQUFlLENBQUM7QUFFdkIsT0FBTyxFQUFFLEtBQUssRUFBRSxNQUFNLGlCQUFpQixDQUFDO0FBQ3hDLE9BQU8sRUFBRSxPQUFPLEVBQUUsTUFBTSxtQkFBbUIsQ0FBQztBQUU1QyxNQUFNLFVBQVUseUJBQXlCLENBQ3ZDLE1BQWMsRUFDZCxLQUF3QjtJQUV4QixJQUFJLEtBQUssRUFBRSxFQUFFO1FBQ1gsT0FBTyxPQUFPLENBQUMsTUFBTSxDQUFDLENBQUMsQ0FBQyxDQUFDLFNBQVMsQ0FBQyxDQUFDLENBQUMsYUFBYSxDQUFDO0tBQ3BEO1NBQU07UUFDTCxPQUFPLE9BQU8sQ0FBQyxNQUFNLENBQUM7WUFDcEIsQ0FBQyxDQUFDLEtBQUssQ0FBQyxZQUFZLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQztZQUNoQyxDQUFDLENBQUMsS0FBSyxDQUFDLGFBQWEsQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLENBQUM7S0FDckM7QUFDSCxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHtcbiAgQ2hhbmdlRGV0ZWN0b3JSZWYsXG4gIE5nWm9uZSxcbiAgybVkZXRlY3RDaGFuZ2VzIGFzIGRldGVjdENoYW5nZXMsXG4gIMm1bWFya0RpcnR5IGFzIG1hcmtEaXJ0eSxcbn0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5cbmltcG9ydCB7IGlzSXZ5IH0gZnJvbSAnLi4vdXRpbHMvaXMtaXZ5JztcbmltcG9ydCB7IGhhc1pvbmUgfSBmcm9tICcuLi91dGlscy9oYXMtem9uZSc7XG5cbmV4cG9ydCBmdW5jdGlvbiBnZXRDaGFuZ2VEZXRlY3Rpb25IYW5kbGVyKFxuICBuZ1pvbmU6IE5nWm9uZSxcbiAgY2RSZWY6IENoYW5nZURldGVjdG9yUmVmXG4pOiA8VD4oY29tcG9uZW50PzogVCkgPT4gdm9pZCB7XG4gIGlmIChpc0l2eSgpKSB7XG4gICAgcmV0dXJuIGhhc1pvbmUobmdab25lKSA/IG1hcmtEaXJ0eSA6IGRldGVjdENoYW5nZXM7XG4gIH0gZWxzZSB7XG4gICAgcmV0dXJuIGhhc1pvbmUobmdab25lKVxuICAgICAgPyBjZFJlZi5tYXJrRm9yQ2hlY2suYmluZChjZFJlZilcbiAgICAgIDogY2RSZWYuZGV0ZWN0Q2hhbmdlcy5iaW5kKGNkUmVmKTtcbiAgfVxufVxuIl19
+//# sourceMappingURL=get-change-detection-handling.js.map

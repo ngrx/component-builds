@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"ng://@ngrx/component/","sources":["src/core/projections/index.ts"],"names":[],"mappings":";;;;;AAAA,kCAAc,qBAAqB,CAAC","sourcesContent":["export * from './toObservableValue';\n"]}

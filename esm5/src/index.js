@@ -1,4 +1,9 @@
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 export { PushPipe } from './push';
 export { LetDirective } from './let';
 export { ReactiveComponentModule } from './reactive-component.module';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi8uLi8uLi9tb2R1bGVzL2NvbXBvbmVudC9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLFFBQVEsRUFBRSxNQUFNLFFBQVEsQ0FBQztBQUNsQyxPQUFPLEVBQUUsWUFBWSxFQUFFLE1BQU0sT0FBTyxDQUFDO0FBQ3JDLE9BQU8sRUFBRSx1QkFBdUIsRUFBRSxNQUFNLDZCQUE2QixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IHsgUHVzaFBpcGUgfSBmcm9tICcuL3B1c2gnO1xuZXhwb3J0IHsgTGV0RGlyZWN0aXZlIH0gZnJvbSAnLi9sZXQnO1xuZXhwb3J0IHsgUmVhY3RpdmVDb21wb25lbnRNb2R1bGUgfSBmcm9tICcuL3JlYWN0aXZlLWNvbXBvbmVudC5tb2R1bGUnO1xuIl19
+//# sourceMappingURL=index.js.map
