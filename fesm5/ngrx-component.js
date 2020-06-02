@@ -406,7 +406,7 @@ var PushPipe = /** @class */ (function () {
         this.subscription.unsubscribe();
     };
     PushPipe.decorators = [
-        { type: Pipe, args: [{ name: 'ngrxPush', pure: false },] },
+        { type: Pipe, args: [{ name: 'ngrxPush', pure: false },] }
     ];
     /** @nocollapse */
     PushPipe.ctorParameters = function () { return [
@@ -712,7 +712,7 @@ var LetDirective = /** @class */ (function () {
         this.viewContainerRef.clear();
     };
     LetDirective.decorators = [
-        { type: Directive, args: [{ selector: '[ngrxLet]' },] },
+        { type: Directive, args: [{ selector: '[ngrxLet]' },] }
     ];
     /** @nocollapse */
     LetDirective.ctorParameters = function () { return [
@@ -807,7 +807,7 @@ var ReactiveComponentModule = /** @class */ (function () {
         { type: NgModule, args: [{
                     declarations: [DECLARATIONS],
                     exports: [EXPORTS],
-                },] },
+                },] }
     ];
     return ReactiveComponentModule;
 }());

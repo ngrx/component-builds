@@ -408,7 +408,7 @@
             this.subscription.unsubscribe();
         };
         PushPipe.decorators = [
-            { type: core.Pipe, args: [{ name: 'ngrxPush', pure: false },] },
+            { type: core.Pipe, args: [{ name: 'ngrxPush', pure: false },] }
         ];
         /** @nocollapse */
         PushPipe.ctorParameters = function () { return [
@@ -714,7 +714,7 @@
             this.viewContainerRef.clear();
         };
         LetDirective.decorators = [
-            { type: core.Directive, args: [{ selector: '[ngrxLet]' },] },
+            { type: core.Directive, args: [{ selector: '[ngrxLet]' },] }
         ];
         /** @nocollapse */
         LetDirective.ctorParameters = function () { return [
@@ -809,7 +809,7 @@
             { type: core.NgModule, args: [{
                         declarations: [DECLARATIONS],
                         exports: [EXPORTS],
-                    },] },
+                    },] }
         ];
         return ReactiveComponentModule;
     }());

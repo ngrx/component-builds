@@ -385,7 +385,7 @@ class PushPipe {
     }
 }
 PushPipe.decorators = [
-    { type: Pipe, args: [{ name: 'ngrxPush', pure: false },] },
+    { type: Pipe, args: [{ name: 'ngrxPush', pure: false },] }
 ];
 /** @nocollapse */
 PushPipe.ctorParameters = () => [
@@ -661,7 +661,7 @@ class LetDirective {
     }
 }
 LetDirective.decorators = [
-    { type: Directive, args: [{ selector: '[ngrxLet]' },] },
+    { type: Directive, args: [{ selector: '[ngrxLet]' },] }
 ];
 /** @nocollapse */
 LetDirective.ctorParameters = () => [
@@ -753,7 +753,7 @@ ReactiveComponentModule.decorators = [
     { type: NgModule, args: [{
                 declarations: [DECLARATIONS],
                 exports: [EXPORTS],
-            },] },
+            },] }
 ];
 
 /**

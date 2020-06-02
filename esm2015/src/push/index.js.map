@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sourceRoot":"ng://@ngrx/component/","sources":["src/push/index.ts"],"names":[],"mappings":";;;;;AAAA,yBAAc,aAAa,CAAC","sourcesContent":["export * from './push.pipe';\n"]}
