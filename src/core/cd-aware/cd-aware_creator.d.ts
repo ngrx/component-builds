@@ -1,17 +1,7 @@
-import { ChangeDetectorRef, NgZone } from '@angular/core';
-import { NextObserver, Observable, PartialObserver, Subscribable } from 'rxjs';
-export interface CoalescingConfig {
-    optimized: boolean;
-}
+import { NextObserver, Subscribable } from 'rxjs';
 export interface CdAware<U> extends Subscribable<U> {
-    next: (value: Observable<U> | Promise<U> | null | undefined) => void;
+    nextPotentialObservable: (value: any) => void;
 }
-export interface WorkConfig {
-    context: any;
-    ngZone: NgZone;
-    cdRef: ChangeDetectorRef;
-}
-export declare function setUpWork(cfg: WorkConfig): () => void;
 /**
  * class CdAware
  *
@@ -22,8 +12,7 @@ export declare function setUpWork(cfg: WorkConfig): () => void;
  * Also custom behaviour is something you need to implement in the extending class
  */
 export declare function createCdAware<U>(cfg: {
-    work: () => void;
-    resetContextObserver: NextObserver<unknown>;
-    configurableBehaviour: (o: Observable<Observable<U | null | undefined>>) => Observable<Observable<U | null | undefined>>;
-    updateViewContextObserver: PartialObserver<U | null | undefined>;
+    render: () => void;
+    resetContextObserver: NextObserver<void>;
+    updateViewContextObserver: NextObserver<U | undefined | null>;
 }): CdAware<U | undefined | null>;

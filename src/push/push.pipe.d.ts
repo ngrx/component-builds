@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, NgZone, OnDestroy, PipeTransform } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CoalescingConfig as PushPipeConfig } from '../core';
+import { ObservableInput } from 'rxjs';
 /**
  * @Pipe PushPipe
  *
@@ -18,7 +17,8 @@ import { CoalescingConfig as PushPipeConfig } from '../core';
  * ```
  *
  * The problem is `async` pipe just marks the component and all its ancestors as dirty.
- * It needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render all dirty marked components.
+ * It needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render_creator all dirty marked
+ *     components.
  *
  * Heavy dynamic and interactive UIs suffer from zones change detection a lot and can
  * lean to bad performance or even unusable applications, but the `async` pipe does not work in zone-less mode.
@@ -26,7 +26,7 @@ import { CoalescingConfig as PushPipeConfig } from '../core';
  * `ngrxPush` pipe solves that problem.
  *
  * Included Features:
- *  - Take observables or promises, retrieve their values and render the value to the template
+ *  - Take observables or promises, retrieve their values and render_creator the value to the template
  *  - Handling null and undefined values in a clean unified/structured way
  *  - Triggers change-detection differently if `zone.js` is present or not (`detectChanges` or `markForCheck`)
  *  - Distinct same values in a row to increase performance
@@ -45,16 +45,13 @@ import { CoalescingConfig as PushPipeConfig } from '../core';
  */
 export declare class PushPipe<S> implements PipeTransform, OnDestroy {
     private renderedValue;
-    private readonly configSubject;
-    private readonly config$;
     private readonly subscription;
     private readonly cdAware;
-    private readonly updateViewContextObserver;
     private readonly resetContextObserver;
-    private readonly configurableBehaviour;
+    private readonly updateViewContextObserver;
     constructor(cdRef: ChangeDetectorRef, ngZone: NgZone);
-    transform(potentialObservable: null, config?: PushPipeConfig): null;
-    transform(potentialObservable: undefined, config?: PushPipeConfig): undefined;
-    transform(potentialObservable: Observable<S> | Promise<S>, config?: PushPipeConfig): S;
+    transform<T>(potentialObservable: null): null;
+    transform<T>(potentialObservable: undefined): undefined;
+    transform<T>(potentialObservable: ObservableInput<T>): T;
     ngOnDestroy(): void;
 }

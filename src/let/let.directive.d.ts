@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, NgZone, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
-import { Observable, Unsubscribable } from 'rxjs';
-import { CoalescingConfig as NgRxLetConfig } from '../core';
+import { ObservableInput, Unsubscribable } from 'rxjs';
 export interface LetViewContext<T> {
     $implicit?: T;
     ngrxLet?: T;
@@ -78,16 +77,13 @@ export declare class LetDirective<U> implements OnDestroy {
     private readonly viewContainerRef;
     private embeddedView;
     private readonly ViewContext;
-    private readonly configSubject;
-    private readonly config$;
     protected readonly subscription: Unsubscribable;
     private readonly cdAware;
     private readonly resetContextObserver;
     private readonly updateViewContextObserver;
-    static ngTemplateContextGuard<U>(dir: LetDirective<U>, ctx: unknown): ctx is LetViewContext<U>;
-    private readonly configurableBehaviour;
-    set ngrxLet(potentialObservable: Observable<U> | Promise<U> | null | undefined);
-    set ngrxLetConfig(config: NgRxLetConfig);
+    static ngTemplateContextGuard<U>(dir: LetDirective<U>, ctx: unknown | null | undefined): ctx is LetViewContext<U>;
+    static ngTemplateGuard_ngrxLet: 'binding';
+    set ngrxLet(potentialObservable: ObservableInput<U> | null | undefined);
     constructor(cdRef: ChangeDetectorRef, ngZone: NgZone, templateRef: TemplateRef<LetViewContext<U>>, viewContainerRef: ViewContainerRef);
     createEmbeddedView(): void;
     ngOnDestroy(): void;

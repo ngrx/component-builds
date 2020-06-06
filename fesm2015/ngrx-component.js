@@ -1,6 +1,6 @@
-import { ɵmarkDirty, ɵdetectChanges, Pipe, ChangeDetectorRef, NgZone, Directive, TemplateRef, ViewContainerRef, Input, NgModule } from '@angular/core';
-import { from, of, Subject, ReplaySubject, EMPTY } from 'rxjs';
-import { distinctUntilChanged, map, tap, switchAll, withLatestFrom, filter, startWith, catchError } from 'rxjs/operators';
+import { Pipe, ChangeDetectorRef, NgZone, Directive, TemplateRef, ViewContainerRef, Input, NgModule } from '@angular/core';
+import { Subject, EMPTY } from 'rxjs';
+import { distinctUntilChanged, switchMap, tap, catchError } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
@@ -10,22 +10,46 @@ import { distinctUntilChanged, map, tap, switchAll, withLatestFrom, filter, star
 /**
  * \@description
  *
- * This function returns a reference to globalThis in the following environments:
- * - Browser
- * - SSR (Server Side Rendering)
- * - Tests
+ * A fallback for the new `globalThis` reference.
  *
- * The function can be just imported and used everywhere.
+ *  It should be used to replace `window` due to different environments in:
+ *  - SSR (Server Side Rendering)
+ *  - Tests
+ *  - Browser
  *
- * ```ts
- * import { getGlobalThis } from `utils/get-global-this`;
- *
- * console.log(getGlobalThis());
- * ```
- * @return {?}
+ * @return {?} - A reference to globalThis. `window` in the Browser.
  */
 function getGlobalThis() {
     return (/** @type {?} */ ((((/** @type {?} */ (globalThis))) || ((/** @type {?} */ (self))) || ((/** @type {?} */ (window))))));
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/core/utils/zone-checks.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * isNgZone
+ *
+ * \@description
+ *
+ * This function takes any instance of a class and checks
+ * if the constructor name is equal to `NgZone`.
+ * This means the Angular application that instantiated this service assumes it runs in a ZuneLess environment,
+ * and therefor it's change detection will not be triggered by zone related logic.
+ *
+ * However, keep in mind this does not mean `zone.js` is not present.
+ * The environment could still run in ZoneFull mode even if Angular turned it off.
+ * Consider the situation of a Angular element configured for ZoneLess
+ * environments is used in an Angular application relining on the zone mechanism.
+ *
+ * @param {?} instance - The instance to check for constructor name of `NgZone`.
+ * @return {?} boolean - true if instance is of type `NgZone`.
+ *
+ */
+function isNgZone(instance) {
+    var _a;
+    return ((_a = instance === null || instance === void 0 ? void 0 : instance.constructor) === null || _a === void 0 ? void 0 : _a.name) === 'NgZone';
 }
 
 /**
@@ -77,86 +101,43 @@ function isIvy() {
 
 /**
  * @fileoverview added by tsickle
- * Generated from: src/core/utils/has-zone.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * \@description
- *
- * Determines if the application uses `NgZone` or `NgNoopZone` as ngZone service instance.
- *
- * The function can be just imported and used everywhere.
- *
- * ```ts
- * import { hasZone } from `utils/has-zone`;
- *
- * console.log(hasZone());
- * ```
- * @param {?} z
- * @return {?}
- */
-function hasZone(z) {
-    return z.constructor.name !== 'NoopNgZone';
-}
-
-/**
- * @fileoverview added by tsickle
  * Generated from: src/core/utils/index.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * Generated from: src/core/projections/toObservableValue.ts
+ * Generated from: src/core/cd-aware/creator_render.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
- * \@description
- *
- * This operator ensures the passed value is of the right type for `CdAware`.
- * It takes `null`, `undefined` or `Observable<T>` and returns `Observable<null, undefined, T>`.
- * Every other value throws an error.
- *
- * ```ts
- * import { toObservableValue } from `projections/toObservableValue`;
- *
- * const toObservableValue()
- *  .pipe(switchAll())
- *  .subscribe((n) => console.log(n););
- * ```
- * @template T
- * @param {?} p
- * @return {?}
+ * @record
  */
-function toObservableValue(p) {
-    return p ? from(p) : of(p);
+function RenderConfig() { }
+if (false) {
+    /** @type {?} */
+    RenderConfig.prototype.ngZone;
+    /** @type {?} */
+    RenderConfig.prototype.cdRef;
 }
-
 /**
- * @fileoverview added by tsickle
- * Generated from: src/core/projections/index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * Generated from: src/core/cd-aware/get-change-detection-handling.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} ngZone
- * @param {?} cdRef
+ * @template T
+ * @param {?} config
  * @return {?}
  */
-function getChangeDetectionHandler(ngZone, cdRef) {
-    if (isIvy()) {
-        return hasZone(ngZone) ? ɵmarkDirty : ɵdetectChanges;
+function createRender(config) {
+    /**
+     * @return {?}
+     */
+    function render() {
+        if (isNgZone(config.ngZone)) {
+            config.cdRef.markForCheck();
+        }
+        else {
+            config.cdRef.detectChanges();
+        }
     }
-    else {
-        return hasZone(ngZone)
-            ? cdRef.markForCheck.bind(cdRef)
-            : cdRef.detectChanges.bind(cdRef);
-    }
+    return render;
 }
 
 /**
@@ -166,44 +147,12 @@ function getChangeDetectionHandler(ngZone, cdRef) {
  */
 /**
  * @record
- */
-function CoalescingConfig() { }
-if (false) {
-    /** @type {?} */
-    CoalescingConfig.prototype.optimized;
-}
-/**
- * @record
  * @template U
  */
 function CdAware() { }
 if (false) {
     /** @type {?} */
-    CdAware.prototype.next;
-}
-/**
- * @record
- */
-function WorkConfig() { }
-if (false) {
-    /** @type {?} */
-    WorkConfig.prototype.context;
-    /** @type {?} */
-    WorkConfig.prototype.ngZone;
-    /** @type {?} */
-    WorkConfig.prototype.cdRef;
-}
-/**
- * @param {?} cfg
- * @return {?}
- */
-function setUpWork(cfg) {
-    /** @type {?} */
-    const render = getChangeDetectionHandler(cfg.ngZone, cfg.cdRef);
-    return (/**
-     * @return {?}
-     */
-    () => render(cfg.context));
+    CdAware.prototype.nextPotentialObservable;
 }
 /**
  * class CdAware
@@ -219,42 +168,57 @@ function setUpWork(cfg) {
  */
 function createCdAware(cfg) {
     /** @type {?} */
-    const observablesSubject = new Subject();
+    const potentialObservablesSubject = new Subject();
     /** @type {?} */
-    const observables$ = observablesSubject.pipe(distinctUntilChanged(), 
-    // Try to convert it to values, throw if not possible
-    map((/**
-     * @param {?} v
+    const observablesFromTemplate$ = potentialObservablesSubject.pipe(distinctUntilChanged());
+    /** @type {?} */
+    const rendering$ = observablesFromTemplate$.pipe(
+    // Compose the observables from the template and the strategy
+    switchMap((/**
+     * @param {?} observable$
      * @return {?}
      */
-    (v) => toObservableValue(v))), tap((/**
-     * @param {?} v
-     * @return {?}
-     */
-    (v) => {
-        cfg.resetContextObserver.next(v);
-        cfg.work();
-    })), map((/**
-     * @param {?} value$
-     * @return {?}
-     */
-    value$ => value$.pipe(distinctUntilChanged(), tap(cfg.updateViewContextObserver)))), cfg.configurableBehaviour, switchAll(), tap((/**
-     * @return {?}
-     */
-    () => cfg.work())));
+    (observable$) => {
+        // If the passed observable is:
+        // - undefined - No value set
+        // - null - null passed directly or no value set over `async` pipe
+        if (observable$ == null) {
+            // Update the value to render_creator with null/undefined
+            cfg.updateViewContextObserver.next((/** @type {?} */ (observable$)));
+            // Render the view
+            cfg.render();
+            // Stop further processing
+            return EMPTY;
+        }
+        // If a new Observable arrives, reset the value to render_creator
+        // We do this because we don't know when the next value arrives and want to get rid of the old value
+        cfg.resetContextObserver.next();
+        cfg.render();
+        return observable$.pipe(distinctUntilChanged(), tap(cfg.updateViewContextObserver), tap((/**
+         * @return {?}
+         */
+        () => cfg.render())), catchError((/**
+         * @param {?} e
+         * @return {?}
+         */
+        (e) => {
+            console.error(e);
+            return EMPTY;
+        })));
+    })));
     return (/** @type {?} */ ({
         /**
          * @param {?} value
          * @return {?}
          */
-        next(value) {
-            observablesSubject.next(value);
+        nextPotentialObservable(value) {
+            potentialObservablesSubject.next(value);
         },
         /**
          * @return {?}
          */
         subscribe() {
-            return observables$.subscribe();
+            return rendering$.subscribe();
         },
     }));
 }
@@ -293,7 +257,8 @@ function createCdAware(cfg) {
  * ```
  *
  * The problem is `async` pipe just marks the component and all its ancestors as dirty.
- * It needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render all dirty marked components.
+ * It needs zone.js microtask queue to exhaust until `ApplicationRef.tick` is called to render_creator all dirty marked
+ *     components.
  *
  * Heavy dynamic and interactive UIs suffer from zones change detection a lot and can
  * lean to bad performance or even unusable applications, but the `async` pipe does not work in zone-less mode.
@@ -301,7 +266,7 @@ function createCdAware(cfg) {
  * `ngrxPush` pipe solves that problem.
  *
  * Included Features:
- *  - Take observables or promises, retrieve their values and render the value to the template
+ *  - Take observables or promises, retrieve their values and render_creator the value to the template
  *  - Handling null and undefined values in a clean unified/structured way
  *  - Triggers change-detection differently if `zone.js` is present or not (`detectChanges` or `markForCheck`)
  *  - Distinct same values in a row to increase performance
@@ -325,10 +290,12 @@ class PushPipe {
      * @param {?} ngZone
      */
     constructor(cdRef, ngZone) {
-        this.configSubject = new Subject();
-        this.config$ = this.configSubject
-            .asObservable()
-            .pipe(distinctUntilChanged());
+        this.resetContextObserver = {
+            next: (/**
+             * @return {?}
+             */
+            () => (this.renderedValue = undefined)),
+        };
         this.updateViewContextObserver = {
             next: (/**
              * @param {?} value
@@ -336,46 +303,21 @@ class PushPipe {
              */
             (value) => (this.renderedValue = value)),
         };
-        this.resetContextObserver = {
-            next: (/**
-             * @param {?} value
-             * @return {?}
-             */
-            (value) => (this.renderedValue = undefined)),
-        };
-        this.configurableBehaviour = (/**
-         * @template T
-         * @param {?} o$
-         * @return {?}
-         */
-        (o$) => o$.pipe(withLatestFrom(this.config$), map((/**
-         * @param {?} __0
-         * @return {?}
-         */
-        ([value$, config]) => {
-            return value$.pipe();
-        }))));
         this.cdAware = createCdAware({
-            work: setUpWork({
-                ngZone,
-                cdRef,
-                context: ((/** @type {?} */ (cdRef))).context,
-            }),
+            render: createRender({ cdRef, ngZone }),
             updateViewContextObserver: this.updateViewContextObserver,
             resetContextObserver: this.resetContextObserver,
-            configurableBehaviour: this.configurableBehaviour,
         });
         this.subscription = this.cdAware.subscribe();
     }
     /**
+     * @template T
      * @param {?} potentialObservable
-     * @param {?=} config
      * @return {?}
      */
-    transform(potentialObservable, config = { optimized: true }) {
-        this.configSubject.next(config);
-        this.cdAware.next(potentialObservable);
-        return this.renderedValue;
+    transform(potentialObservable) {
+        this.cdAware.nextPotentialObservable(potentialObservable);
+        return (/** @type {?} */ (this.renderedValue));
     }
     /**
      * @return {?}
@@ -402,16 +344,6 @@ if (false) {
      * @type {?}
      * @private
      */
-    PushPipe.prototype.configSubject;
-    /**
-     * @type {?}
-     * @private
-     */
-    PushPipe.prototype.config$;
-    /**
-     * @type {?}
-     * @private
-     */
     PushPipe.prototype.subscription;
     /**
      * @type {?}
@@ -422,17 +354,12 @@ if (false) {
      * @type {?}
      * @private
      */
-    PushPipe.prototype.updateViewContextObserver;
-    /**
-     * @type {?}
-     * @private
-     */
     PushPipe.prototype.resetContextObserver;
     /**
      * @type {?}
      * @private
      */
-    PushPipe.prototype.configurableBehaviour;
+    PushPipe.prototype.updateViewContextObserver;
 }
 
 /**
@@ -544,17 +471,12 @@ class LetDirective {
             $error: false,
             $complete: false,
         };
-        this.configSubject = new ReplaySubject();
-        this.config$ = this.configSubject.pipe(filter((/**
-         * @param {?} v
-         * @return {?}
-         */
-        v => v !== undefined && v !== null)), distinctUntilChanged(), startWith({ optimized: true }));
         this.resetContextObserver = {
             next: (/**
              * @return {?}
              */
             () => {
+                // if not initialized no need to set undefined
                 if (this.embeddedView) {
                     this.ViewContext.$implicit = undefined;
                     this.ViewContext.ngrxLet = undefined;
@@ -569,6 +491,7 @@ class LetDirective {
              * @return {?}
              */
             (value) => {
+                // to have init lazy
                 if (!this.embeddedView) {
                     this.createEmbeddedView();
                 }
@@ -580,6 +503,7 @@ class LetDirective {
              * @return {?}
              */
             (error) => {
+                // to have init lazy
                 if (!this.embeddedView) {
                     this.createEmbeddedView();
                 }
@@ -589,37 +513,17 @@ class LetDirective {
              * @return {?}
              */
             () => {
+                // to have init lazy
                 if (!this.embeddedView) {
                     this.createEmbeddedView();
                 }
                 this.ViewContext.$complete = true;
             }),
         };
-        this.configurableBehaviour = (/**
-         * @template T
-         * @param {?} o$
-         * @return {?}
-         */
-        (o$) => o$.pipe(withLatestFrom(this.config$), map((/**
-         * @param {?} __0
-         * @return {?}
-         */
-        ([value$, config]) => {
-            return value$.pipe(catchError((/**
-             * @param {?} e
-             * @return {?}
-             */
-            e => EMPTY)));
-        }))));
         this.cdAware = createCdAware({
-            work: setUpWork({
-                cdRef,
-                ngZone,
-                context: ((/** @type {?} */ (cdRef))).context,
-            }),
+            render: createRender({ cdRef, ngZone }),
             resetContextObserver: this.resetContextObserver,
             updateViewContextObserver: this.updateViewContextObserver,
-            configurableBehaviour: this.configurableBehaviour,
         });
         this.subscription = this.cdAware.subscribe();
     }
@@ -637,14 +541,7 @@ class LetDirective {
      * @return {?}
      */
     set ngrxLet(potentialObservable) {
-        this.cdAware.next(potentialObservable);
-    }
-    /**
-     * @param {?} config
-     * @return {?}
-     */
-    set ngrxLetConfig(config) {
-        this.configSubject.next(config || { optimized: true });
+        this.cdAware.nextPotentialObservable(potentialObservable);
     }
     /**
      * @return {?}
@@ -671,10 +568,11 @@ LetDirective.ctorParameters = () => [
     { type: ViewContainerRef }
 ];
 LetDirective.propDecorators = {
-    ngrxLet: [{ type: Input }],
-    ngrxLetConfig: [{ type: Input }]
+    ngrxLet: [{ type: Input }]
 };
 if (false) {
+    /** @type {?} */
+    LetDirective.ngTemplateGuard_ngrxLet;
     /**
      * @type {?}
      * @private
@@ -685,16 +583,6 @@ if (false) {
      * @private
      */
     LetDirective.prototype.ViewContext;
-    /**
-     * @type {?}
-     * @private
-     */
-    LetDirective.prototype.configSubject;
-    /**
-     * @type {?}
-     * @private
-     */
-    LetDirective.prototype.config$;
     /**
      * @type {?}
      * @protected
@@ -715,11 +603,6 @@ if (false) {
      * @private
      */
     LetDirective.prototype.updateViewContextObserver;
-    /**
-     * @type {?}
-     * @private
-     */
-    LetDirective.prototype.configurableBehaviour;
     /**
      * @type {?}
      * @private
