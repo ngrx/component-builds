@@ -22,7 +22,7 @@
      * @return {?} - A reference to globalThis. `window` in the Browser.
      */
     function getGlobalThis() {
-        return (/** @type {?} */ ((((/** @type {?} */ (globalThis))) || ((/** @type {?} */ (self))) || ((/** @type {?} */ (window))))));
+        return ( /** @type {?} */(((( /** @type {?} */(globalThis))) || (( /** @type {?} */(self))) || (( /** @type {?} */(window))))));
     }
 
     /**
@@ -176,17 +176,16 @@
         /** @type {?} */
         var rendering$ = observablesFromTemplate$.pipe(
         // Compose the observables from the template and the strategy
-        operators.switchMap((/**
+        operators.switchMap(( /**
          * @param {?} observable$
          * @return {?}
-         */
-        function (observable$) {
+         */function (observable$) {
             // If the passed observable is:
             // - undefined - No value set
             // - null - null passed directly or no value set over `async` pipe
             if (observable$ == null) {
                 // Update the value to render_creator with null/undefined
-                cfg.updateViewContextObserver.next((/** @type {?} */ (observable$)));
+                cfg.updateViewContextObserver.next(( /** @type {?} */(observable$)));
                 // Render the view
                 cfg.render();
                 // Stop further processing
@@ -196,30 +195,28 @@
             // We do this because we don't know when the next value arrives and want to get rid of the old value
             cfg.resetContextObserver.next();
             cfg.render();
-            return observable$.pipe(operators.distinctUntilChanged(), operators.tap(cfg.updateViewContextObserver), operators.tap((/**
+            return observable$.pipe(operators.distinctUntilChanged(), operators.tap(cfg.updateViewContextObserver), operators.tap(( /**
              * @return {?}
-             */
-            function () { return cfg.render(); })), operators.catchError((/**
+             */function () { return cfg.render(); })), operators.catchError(( /**
              * @param {?} e
              * @return {?}
-             */
-            function (e) {
+             */function (e) {
                 console.error(e);
                 return rxjs.EMPTY;
             })));
         })));
-        return (/** @type {?} */ ({
-            nextPotentialObservable: /**
+        return ( /** @type {?} */({
+            /**
              * @param {?} value
              * @return {?}
              */
-            function (value) {
+            nextPotentialObservable: function (value) {
                 potentialObservablesSubject.next(value);
             },
-            subscribe: /**
+            /**
              * @return {?}
              */
-            function () {
+            subscribe: function () {
                 return rendering$.subscribe();
             },
         }));
@@ -287,20 +284,22 @@
      * @template S
      */
     var PushPipe = /** @class */ (function () {
+        /**
+         * @param {?} cdRef
+         * @param {?} ngZone
+         */
         function PushPipe(cdRef, ngZone) {
             var _this = this;
             this.resetContextObserver = {
-                next: (/**
+                next: ( /**
                  * @return {?}
-                 */
-                function () { return (_this.renderedValue = undefined); }),
+                 */function () { return (_this.renderedValue = undefined); }),
             };
             this.updateViewContextObserver = {
-                next: (/**
+                next: ( /**
                  * @param {?} value
                  * @return {?}
-                 */
-                function (value) { return (_this.renderedValue = value); }),
+                 */function (value) { return (_this.renderedValue = value); }),
             };
             this.cdAware = createCdAware({
                 render: createRender({ cdRef: cdRef, ngZone: ngZone }),
@@ -314,34 +313,26 @@
          * @param {?} potentialObservable
          * @return {?}
          */
-        PushPipe.prototype.transform = /**
-         * @template T
-         * @param {?} potentialObservable
-         * @return {?}
-         */
-        function (potentialObservable) {
+        PushPipe.prototype.transform = function (potentialObservable) {
             this.cdAware.nextPotentialObservable(potentialObservable);
-            return (/** @type {?} */ (this.renderedValue));
+            return ( /** @type {?} */(this.renderedValue));
         };
         /**
          * @return {?}
          */
-        PushPipe.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-        function () {
+        PushPipe.prototype.ngOnDestroy = function () {
             this.subscription.unsubscribe();
         };
-        PushPipe.decorators = [
-            { type: core.Pipe, args: [{ name: 'ngrxPush', pure: false },] }
-        ];
-        /** @nocollapse */
-        PushPipe.ctorParameters = function () { return [
-            { type: core.ChangeDetectorRef },
-            { type: core.NgZone }
-        ]; };
         return PushPipe;
     }());
+    PushPipe.decorators = [
+        { type: core.Pipe, args: [{ name: 'ngrxPush', pure: false },] }
+    ];
+    /** @nocollapse */
+    PushPipe.ctorParameters = function () { return [
+        { type: core.ChangeDetectorRef },
+        { type: core.NgZone }
+    ]; };
     if (false) {
         /**
          * @type {?}
@@ -464,6 +455,12 @@
      * @template U
      */
     var LetDirective = /** @class */ (function () {
+        /**
+         * @param {?} cdRef
+         * @param {?} ngZone
+         * @param {?} templateRef
+         * @param {?} viewContainerRef
+         */
         function LetDirective(cdRef, ngZone, templateRef, viewContainerRef) {
             var _this = this;
             this.templateRef = templateRef;
@@ -475,10 +472,9 @@
                 $complete: false,
             };
             this.resetContextObserver = {
-                next: (/**
+                next: ( /**
                  * @return {?}
-                 */
-                function () {
+                 */function () {
                     // if not initialized no need to set undefined
                     if (_this.embeddedView) {
                         _this.ViewContext.$implicit = undefined;
@@ -489,11 +485,10 @@
                 }),
             };
             this.updateViewContextObserver = {
-                next: (/**
+                next: ( /**
                  * @param {?} value
                  * @return {?}
-                 */
-                function (value) {
+                 */function (value) {
                     // to have init lazy
                     if (!_this.embeddedView) {
                         _this.createEmbeddedView();
@@ -501,21 +496,19 @@
                     _this.ViewContext.$implicit = value;
                     _this.ViewContext.ngrxLet = value;
                 }),
-                error: (/**
+                error: ( /**
                  * @param {?} error
                  * @return {?}
-                 */
-                function (error) {
+                 */function (error) {
                     // to have init lazy
                     if (!_this.embeddedView) {
                         _this.createEmbeddedView();
                     }
                     _this.ViewContext.$error = true;
                 }),
-                complete: (/**
+                complete: ( /**
                  * @return {?}
-                 */
-                function () {
+                 */function () {
                     // to have init lazy
                     if (!_this.embeddedView) {
                         _this.createEmbeddedView();
@@ -536,60 +529,48 @@
          * @param {?} ctx
          * @return {?}
          */
-        LetDirective.ngTemplateContextGuard = /**
-         * @template U
-         * @param {?} dir
-         * @param {?} ctx
-         * @return {?}
-         */
-        function (dir, ctx) {
+        LetDirective.ngTemplateContextGuard = function (dir, ctx) {
             return true;
         };
         Object.defineProperty(LetDirective.prototype, "ngrxLet", {
-            set: /**
+            /**
              * @param {?} potentialObservable
              * @return {?}
              */
-            function (potentialObservable) {
+            set: function (potentialObservable) {
                 this.cdAware.nextPotentialObservable(potentialObservable);
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         /**
          * @return {?}
          */
-        LetDirective.prototype.createEmbeddedView = /**
-         * @return {?}
-         */
-        function () {
+        LetDirective.prototype.createEmbeddedView = function () {
             this.embeddedView = this.viewContainerRef.createEmbeddedView(this.templateRef, this.ViewContext);
         };
         /**
          * @return {?}
          */
-        LetDirective.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-        function () {
+        LetDirective.prototype.ngOnDestroy = function () {
             this.subscription.unsubscribe();
             this.viewContainerRef.clear();
         };
-        LetDirective.decorators = [
-            { type: core.Directive, args: [{ selector: '[ngrxLet]' },] }
-        ];
-        /** @nocollapse */
-        LetDirective.ctorParameters = function () { return [
-            { type: core.ChangeDetectorRef },
-            { type: core.NgZone },
-            { type: core.TemplateRef },
-            { type: core.ViewContainerRef }
-        ]; };
-        LetDirective.propDecorators = {
-            ngrxLet: [{ type: core.Input }]
-        };
         return LetDirective;
     }());
+    LetDirective.decorators = [
+        { type: core.Directive, args: [{ selector: '[ngrxLet]' },] }
+    ];
+    /** @nocollapse */
+    LetDirective.ctorParameters = function () { return [
+        { type: core.ChangeDetectorRef },
+        { type: core.NgZone },
+        { type: core.TemplateRef },
+        { type: core.ViewContainerRef }
+    ]; };
+    LetDirective.propDecorators = {
+        ngrxLet: [{ type: core.Input }]
+    };
     if (false) {
         /** @type {?} */
         LetDirective.ngTemplateGuard_ngrxLet;
@@ -653,14 +634,38 @@
     var ReactiveComponentModule = /** @class */ (function () {
         function ReactiveComponentModule() {
         }
-        ReactiveComponentModule.decorators = [
-            { type: core.NgModule, args: [{
-                        declarations: [DECLARATIONS],
-                        exports: [EXPORTS],
-                    },] }
-        ];
         return ReactiveComponentModule;
     }());
+    ReactiveComponentModule.decorators = [
+        { type: core.NgModule, args: [{
+                    declarations: [DECLARATIONS],
+                    exports: [EXPORTS],
+                },] }
+    ];
+
+    /**
+     * @fileoverview added by tsickle
+     * Generated from: src/index.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+
+    /**
+     * @fileoverview added by tsickle
+     * Generated from: public_api.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+
+    /**
+     * @fileoverview added by tsickle
+     * Generated from: index.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+
+    /**
+     * @fileoverview added by tsickle
+     * Generated from: ngrx-component.ts
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
 
     exports.LetDirective = LetDirective;
     exports.PushPipe = PushPipe;
