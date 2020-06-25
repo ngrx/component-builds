@@ -6,27 +6,6 @@
 
     /**
      * @fileoverview added by tsickle
-     * Generated from: src/core/utils/get-global-this.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * \@description
-     *
-     * A fallback for the new `globalThis` reference.
-     *
-     *  It should be used to replace `window` due to different environments in:
-     *  - SSR (Server Side Rendering)
-     *  - Tests
-     *  - Browser
-     *
-     * @return {?} - A reference to globalThis. `window` in the Browser.
-     */
-    function getGlobalThis() {
-        return ( /** @type {?} */(((( /** @type {?} */(globalThis))) || (( /** @type {?} */(self))) || (( /** @type {?} */(window))))));
-    }
-
-    /**
-     * @fileoverview added by tsickle
      * Generated from: src/core/utils/has-zone.ts
      * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
@@ -47,53 +26,6 @@
      */
     function hasZone(z) {
         return z instanceof core.NgZone;
-    }
-
-    /**
-     * @fileoverview added by tsickle
-     * Generated from: src/core/utils/is-ivy.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * \@description
-     *
-     * Determines if the application runs with ivy or not (ViewEngine)
-     *
-     * \@usageNotes
-     *
-     * The function can be just imported and used everywhere.
-     *
-     * ```ts
-     * import { isIvy } from `utils/is-ivy`;
-     *
-     * console.log(isIvy());  // true or false
-     * ```
-     *
-     * The determination if an application runs with Ivy or not is done by following table:
-     *
-     * **Table for ng global presence in ViewEngine and Ivy for prod/dev modes**
-     *
-     *  | render   | ViewEngine | ViewEngine | Ivy       | Ivy       |
-     *  | -------- | ---------- | ---------- | --------- | --------  |
-     *  | mode     | prod       | dev        | prod      | dev       |
-     *  | ng       | present    | present    | undefined | present   |
-     *  | ng.probe | present    | present    | undefined | undefined |
-     *
-     *  > So for Ivy we need to make sure that ng is undefined or,
-     *  > in case of dev environment, ng.probe is undefined
-     *
-     * @return {?}
-     */
-    function isIvy() {
-        /** @type {?} */
-        var ng = getGlobalThis().ng;
-        // Is the global ng object is unavailable?
-        // ng === undefined in Ivy production mode
-        // View Engine has the ng object both in development mode and production mode.
-        return (ng === undefined ||
-            // in case we are in dev mode in ivy
-            // `probe` property is available on ng object we use View Engine.
-            ng.probe === undefined);
     }
 
     /**
