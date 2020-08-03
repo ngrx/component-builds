@@ -39,14 +39,14 @@
     ],
     "migrations": "./migrations/migration.json"
   },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
   "main": "bundles/ngrx-component.umd.js",
   "module": "fesm2015/ngrx-component.js",
   "es2015": "fesm2015/ngrx-component.js",
   "esm2015": "esm2015/ngrx-component.js",
   "fesm2015": "fesm2015/ngrx-component.js",
   "typings": "ngrx-component.d.ts",
-  "metadata": "ngrx-component.metadata.json",
-  "dependencies": {
-    "tslib": "^2.0.0"
-  }
+  "metadata": "ngrx-component.metadata.json"
 }
