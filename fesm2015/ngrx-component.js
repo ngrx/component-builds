@@ -4,71 +4,6 @@ import { distinctUntilChanged, switchMap, tap, catchError } from 'rxjs/operators
 
 /**
  * @fileoverview added by tsickle
- * Generated from: src/core/utils/has-zone.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * \@description
- *
- * Determines if the application uses `NgZone` or `NgNoopZone` as ngZone service instance.
- *
- * The function can be just imported and used everywhere.
- *
- * ```ts
- * import { hasZone } from `utils/has-zone`;
- *
- * console.log(hasZone());
- * ```
- * @param {?} z
- * @return {?}
- */
-function hasZone(z) {
-    return z instanceof NgZone;
-}
-
-/**
- * @fileoverview added by tsickle
- * Generated from: src/core/utils/index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * Generated from: src/core/cd-aware/creator_render.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @record
- */
-function RenderConfig() { }
-if (false) {
-    /** @type {?} */
-    RenderConfig.prototype.ngZone;
-    /** @type {?} */
-    RenderConfig.prototype.cdRef;
-}
-/**
- * @template T
- * @param {?} config
- * @return {?}
- */
-function createRender(config) {
-    /**
-     * @return {?}
-     */
-    function render() {
-        if (hasZone(config.ngZone)) {
-            config.cdRef.markForCheck();
-        }
-        else {
-            config.cdRef.detectChanges();
-        }
-    }
-    return render;
-}
-
-/**
- * @fileoverview added by tsickle
  * Generated from: src/core/cd-aware/cd-aware_creator.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
@@ -152,15 +87,62 @@ function createCdAware(cfg) {
 
 /**
  * @fileoverview added by tsickle
- * Generated from: src/core/cd-aware/index.ts
+ * Generated from: src/core/utils/has-zone.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * \@description
+ *
+ * Determines if the application uses `NgZone` or `NgNoopZone` as ngZone service instance.
+ *
+ * The function can be just imported and used everywhere.
+ *
+ * ```ts
+ * import { hasZone } from `utils/has-zone`;
+ *
+ * console.log(hasZone());
+ * ```
+ * @param {?} z
+ * @return {?}
+ */
+function hasZone(z) {
+    return z instanceof NgZone;
+}
 
 /**
  * @fileoverview added by tsickle
- * Generated from: src/core/index.ts
+ * Generated from: src/core/cd-aware/creator_render.ts
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * @record
+ */
+function RenderConfig() { }
+if (false) {
+    /** @type {?} */
+    RenderConfig.prototype.ngZone;
+    /** @type {?} */
+    RenderConfig.prototype.cdRef;
+}
+/**
+ * @template T
+ * @param {?} config
+ * @return {?}
+ */
+function createRender(config) {
+    /**
+     * @return {?}
+     */
+    function render() {
+        if (hasZone(config.ngZone)) {
+            config.cdRef.markForCheck();
+        }
+        else {
+            config.cdRef.detectChanges();
+        }
+    }
+    return render;
+}
 
 /**
  * @fileoverview added by tsickle
@@ -288,12 +270,6 @@ if (false) {
      */
     PushPipe.prototype.updateViewContextObserver;
 }
-
-/**
- * @fileoverview added by tsickle
- * Generated from: src/push/index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 
 /**
  * @fileoverview added by tsickle
@@ -541,12 +517,6 @@ if (false) {
      */
     LetDirective.prototype.viewContainerRef;
 }
-
-/**
- * @fileoverview added by tsickle
- * Generated from: src/let/index.ts
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 
 /**
  * @fileoverview added by tsickle
