@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, NgZone, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
 import { ObservableInput, Unsubscribable } from 'rxjs';
 export interface LetViewContext<T> {
-    $implicit: T;
-    ngrxLet: T;
-    $error: boolean;
-    $complete: boolean;
+    $implicit?: T;
+    ngrxLet?: T;
+    $error?: boolean;
+    $complete?: boolean;
 }
 /**
  * @Directive LetDirective
