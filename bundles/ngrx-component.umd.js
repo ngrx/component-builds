@@ -281,13 +281,13 @@
      */
     function LetViewContext() { }
     if (false) {
-        /** @type {?|undefined} */
+        /** @type {?} */
         LetViewContext.prototype.$implicit;
-        /** @type {?|undefined} */
+        /** @type {?} */
         LetViewContext.prototype.ngrxLet;
-        /** @type {?|undefined} */
+        /** @type {?} */
         LetViewContext.prototype.$error;
-        /** @type {?|undefined} */
+        /** @type {?} */
         LetViewContext.prototype.$complete;
     }
     /**
