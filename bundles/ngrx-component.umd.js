@@ -53,17 +53,20 @@
                 // Stop further processing
                 return rxjs.EMPTY;
             }
+            /** @type {?} */
+            var ob$ = rxjs.isObservable(observable$)
+                ? (( /** @type {?} */(observable$)))
+                : rxjs.from(observable$);
             // If a new Observable arrives, reset the value to render_creator
             // We do this because we don't know when the next value arrives and want to get rid of the old value
             cfg.resetContextObserver.next();
             cfg.render();
-            return observable$.pipe(operators.distinctUntilChanged(), operators.tap(cfg.updateViewContextObserver), operators.tap(( /**
+            return (( /** @type {?} */(ob$))).pipe(operators.distinctUntilChanged(), operators.tap(cfg.updateViewContextObserver), operators.tap(( /**
              * @return {?}
              */function () { return cfg.render(); })), operators.catchError(( /**
              * @param {?} e
              * @return {?}
              */function (e) {
-                console.error(e);
                 return rxjs.EMPTY;
             })));
         })));

@@ -1,6 +1,6 @@
-import { NextObserver, Subscribable } from 'rxjs';
+import { NextObserver, ObservableInput, Subscribable } from 'rxjs';
 export interface CdAware<U> extends Subscribable<U> {
-    nextPotentialObservable: (value: any) => void;
+    nextPotentialObservable: (value: ObservableInput<any> | null | undefined) => void;
 }
 /**
  * class CdAware

@@ -1,5 +1,5 @@
 import { NgZone, Pipe, ChangeDetectorRef, Directive, TemplateRef, ViewContainerRef, Input, NgModule } from '@angular/core';
-import { Subject, EMPTY } from 'rxjs';
+import { Subject, EMPTY, isObservable, from } from 'rxjs';
 import { distinctUntilChanged, switchMap, tap, catchError } from 'rxjs/operators';
 
 /**
@@ -52,11 +52,15 @@ function createCdAware(cfg) {
             // Stop further processing
             return EMPTY;
         }
+        /** @type {?} */
+        const ob$ = isObservable(observable$)
+            ? ((/** @type {?} */ (observable$)))
+            : from(observable$);
         // If a new Observable arrives, reset the value to render_creator
         // We do this because we don't know when the next value arrives and want to get rid of the old value
         cfg.resetContextObserver.next();
         cfg.render();
-        return observable$.pipe(distinctUntilChanged(), tap(cfg.updateViewContextObserver), tap((/**
+        return ((/** @type {?} */ (ob$))).pipe(distinctUntilChanged(), tap(cfg.updateViewContextObserver), tap((/**
          * @return {?}
          */
         () => cfg.render())), catchError((/**
@@ -64,7 +68,6 @@ function createCdAware(cfg) {
          * @return {?}
          */
         (e) => {
-            console.error(e);
             return EMPTY;
         })));
     })));
