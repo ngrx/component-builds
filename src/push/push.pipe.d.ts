@@ -52,6 +52,6 @@ export declare class PushPipe<S> implements PipeTransform, OnDestroy {
     constructor(cdRef: ChangeDetectorRef, ngZone: NgZone);
     transform<T>(potentialObservable: null): null;
     transform<T>(potentialObservable: undefined): undefined;
-    transform<T>(potentialObservable: ObservableInput<T>): T;
+    transform<T>(potentialObservable: ObservableInput<T>): T | undefined;
     ngOnDestroy(): void;
 }
