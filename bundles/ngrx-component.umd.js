@@ -1,99 +1,58 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('rxjs/operators')) :
     typeof define === 'function' && define.amd ? define('@ngrx/component', ['exports', '@angular/core', 'rxjs', 'rxjs/operators'], factory) :
-    (global = global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.component = {}), global.ng.core, global.rxjs, global.rxjs.operators));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.ngrx = global.ngrx || {}, global.ngrx.component = {}), global.ng.core, global.rxjs, global.rxjs.operators));
 }(this, (function (exports, core, rxjs, operators) { 'use strict';
 
     /**
-     * @fileoverview added by tsickle
-     * Generated from: src/core/cd-aware/cd-aware_creator.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * @record
-     * @template U
-     */
-    function CdAware() { }
-    if (false) {
-        /** @type {?} */
-        CdAware.prototype.nextPotentialObservable;
-    }
-    /**
      * class CdAware
      *
-     * \@description
+     * @description
      * This abstract class holds all the shared logic for the push pipe and the let directive
      * responsible for change detection
      * If you extend this class you need to implement how the update of the rendered value happens.
      * Also custom behaviour is something you need to implement in the extending class
-     * @template U
-     * @param {?} cfg
-     * @return {?}
      */
     function createCdAware(cfg) {
-        /** @type {?} */
         var potentialObservablesSubject = new rxjs.Subject();
-        /** @type {?} */
         var observablesFromTemplate$ = potentialObservablesSubject.pipe(operators.distinctUntilChanged());
-        /** @type {?} */
         var rendering$ = observablesFromTemplate$.pipe(
         // Compose the observables from the template and the strategy
-        operators.switchMap(( /**
-         * @param {?} observable$
-         * @return {?}
-         */function (observable$) {
+        operators.switchMap(function (observable$) {
             // If the passed observable is:
             // - undefined - No value set
             // - null - null passed directly or no value set over `async` pipe
             if (observable$ == null) {
                 // Update the value to render_creator with null/undefined
-                cfg.updateViewContextObserver.next(( /** @type {?} */(observable$)));
+                cfg.updateViewContextObserver.next(observable$);
                 // Render the view
                 cfg.render();
                 // Stop further processing
                 return rxjs.EMPTY;
             }
-            /** @type {?} */
             var ob$ = rxjs.isObservable(observable$)
-                ? (( /** @type {?} */(observable$)))
+                ? observable$
                 : rxjs.from(observable$);
             // If a new Observable arrives, reset the value to render_creator
             // We do this because we don't know when the next value arrives and want to get rid of the old value
             cfg.resetContextObserver.next();
             cfg.render();
-            return (( /** @type {?} */(ob$))).pipe(operators.distinctUntilChanged(), operators.tap(cfg.updateViewContextObserver), operators.tap(( /**
-             * @return {?}
-             */function () { return cfg.render(); })), operators.catchError(( /**
-             * @param {?} e
-             * @return {?}
-             */function (e) {
+            return ob$.pipe(operators.distinctUntilChanged(), operators.tap(cfg.updateViewContextObserver), operators.tap(function () { return cfg.render(); }), operators.catchError(function (e) {
                 return rxjs.EMPTY;
-            })));
-        })));
-        return ( /** @type {?} */({
-            /**
-             * @param {?} value
-             * @return {?}
-             */
+            }));
+        }));
+        return {
             nextPotentialObservable: function (value) {
                 potentialObservablesSubject.next(value);
             },
-            /**
-             * @return {?}
-             */
             subscribe: function () {
                 return rendering$.subscribe();
             },
-        }));
+        };
     }
 
     /**
-     * @fileoverview added by tsickle
-     * Generated from: src/core/utils/has-zone.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * \@description
+     * @description
      *
      * Determines if the application uses `NgZone` or `NgNoopZone` as ngZone service instance.
      *
@@ -104,37 +63,12 @@
      *
      * console.log(hasZone());
      * ```
-     * @param {?} z
-     * @return {?}
      */
     function hasZone(z) {
         return z instanceof core.NgZone;
     }
 
-    /**
-     * @fileoverview added by tsickle
-     * Generated from: src/core/cd-aware/creator_render.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * @record
-     */
-    function RenderConfig() { }
-    if (false) {
-        /** @type {?} */
-        RenderConfig.prototype.ngZone;
-        /** @type {?} */
-        RenderConfig.prototype.cdRef;
-    }
-    /**
-     * @template T
-     * @param {?} config
-     * @return {?}
-     */
     function createRender(config) {
-        /**
-         * @return {?}
-         */
         function render() {
             if (hasZone(config.ngZone)) {
                 config.cdRef.markForCheck();
@@ -147,14 +81,9 @@
     }
 
     /**
-     * @fileoverview added by tsickle
-     * Generated from: src/push/push.pipe.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * \@Pipe PushPipe
+     * @Pipe PushPipe
      *
-     * \@description
+     * @description
      *
      * The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.
      * It contains intelligent handling of change detection to enable us
@@ -183,7 +112,7 @@
      *  - Distinct same values in a row to increase performance
      *  - Coalescing of change detection calls to boost performance
      *
-     * \@usageNotes
+     * @usageNotes
      *
      * `ngrxPush` pipe solves that problem. It can be used like shown here:
      * ```html
@@ -192,26 +121,16 @@
      * <component [value]="observable$ | ngrxPush"></component>
      * ```
      *
-     * \@publicApi
-     * @template S
+     * @publicApi
      */
     var PushPipe = /** @class */ (function () {
-        /**
-         * @param {?} cdRef
-         * @param {?} ngZone
-         */
         function PushPipe(cdRef, ngZone) {
             var _this = this;
             this.resetContextObserver = {
-                next: ( /**
-                 * @return {?}
-                 */function () { return (_this.renderedValue = undefined); }),
+                next: function () { return (_this.renderedValue = undefined); },
             };
             this.updateViewContextObserver = {
-                next: ( /**
-                 * @param {?} value
-                 * @return {?}
-                 */function (value) { return (_this.renderedValue = value); }),
+                next: function (value) { return (_this.renderedValue = value); },
             };
             this.cdAware = createCdAware({
                 render: createRender({ cdRef: cdRef, ngZone: ngZone }),
@@ -220,18 +139,10 @@
             });
             this.subscription = this.cdAware.subscribe();
         }
-        /**
-         * @template T
-         * @param {?} potentialObservable
-         * @return {?}
-         */
         PushPipe.prototype.transform = function (potentialObservable) {
             this.cdAware.nextPotentialObservable(potentialObservable);
-            return ( /** @type {?} */(this.renderedValue));
+            return this.renderedValue;
         };
-        /**
-         * @return {?}
-         */
         PushPipe.prototype.ngOnDestroy = function () {
             this.subscription.unsubscribe();
         };
@@ -245,58 +156,11 @@
         { type: core.ChangeDetectorRef },
         { type: core.NgZone }
     ]; };
-    if (false) {
-        /**
-         * @type {?}
-         * @private
-         */
-        PushPipe.prototype.renderedValue;
-        /**
-         * @type {?}
-         * @private
-         */
-        PushPipe.prototype.subscription;
-        /**
-         * @type {?}
-         * @private
-         */
-        PushPipe.prototype.cdAware;
-        /**
-         * @type {?}
-         * @private
-         */
-        PushPipe.prototype.resetContextObserver;
-        /**
-         * @type {?}
-         * @private
-         */
-        PushPipe.prototype.updateViewContextObserver;
-    }
 
     /**
-     * @fileoverview added by tsickle
-     * Generated from: src/let/let.directive.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * @record
-     * @template T
-     */
-    function LetViewContext() { }
-    if (false) {
-        /** @type {?} */
-        LetViewContext.prototype.$implicit;
-        /** @type {?} */
-        LetViewContext.prototype.ngrxLet;
-        /** @type {?} */
-        LetViewContext.prototype.$error;
-        /** @type {?} */
-        LetViewContext.prototype.$complete;
-    }
-    /**
-     * \@Directive LetDirective
+     * @Directive LetDirective
      *
-     * \@description
+     * @description
      *
      * The `*ngrxLet` directive serves a convenient way of binding observables to a view context (a dom element scope).
      * It also helps with several internal processing under the hood.
@@ -321,7 +185,7 @@
      * - triggers change-detection differently if ViewEngine or Ivy is present (`ChangeDetectorRef.detectChanges` or `ɵdetectChanges`)
      * - distinct same values in a row (distinctUntilChanged operator),
      *
-     * \@usageNotes
+     * @usageNotes
      *
      * The `*ngrxLet` directive take over several things and makes it more convenient and save to work with streams in the template
      * `<ng-container *ngrxLet="observableNumber$ as c"></ng-container>`
@@ -357,16 +221,9 @@
      * </ng-container>
      * ```
      *
-     * \@publicApi
-     * @template U
+     * @publicApi
      */
     var LetDirective = /** @class */ (function () {
-        /**
-         * @param {?} cdRef
-         * @param {?} ngZone
-         * @param {?} templateRef
-         * @param {?} viewContainerRef
-         */
         function LetDirective(cdRef, ngZone, templateRef, viewContainerRef) {
             var _this = this;
             this.templateRef = templateRef;
@@ -378,9 +235,7 @@
                 $complete: false,
             };
             this.resetContextObserver = {
-                next: ( /**
-                 * @return {?}
-                 */function () {
+                next: function () {
                     // if not initialized no need to set undefined
                     if (_this.embeddedView) {
                         _this.ViewContext.$implicit = undefined;
@@ -388,39 +243,31 @@
                         _this.ViewContext.$error = false;
                         _this.ViewContext.$complete = false;
                     }
-                }),
+                },
             };
             this.updateViewContextObserver = {
-                next: ( /**
-                 * @param {?} value
-                 * @return {?}
-                 */function (value) {
+                next: function (value) {
                     // to have init lazy
                     if (!_this.embeddedView) {
                         _this.createEmbeddedView();
                     }
                     _this.ViewContext.$implicit = value;
                     _this.ViewContext.ngrxLet = value;
-                }),
-                error: ( /**
-                 * @param {?} error
-                 * @return {?}
-                 */function (error) {
+                },
+                error: function (error) {
                     // to have init lazy
                     if (!_this.embeddedView) {
                         _this.createEmbeddedView();
                     }
                     _this.ViewContext.$error = true;
-                }),
-                complete: ( /**
-                 * @return {?}
-                 */function () {
+                },
+                complete: function () {
                     // to have init lazy
                     if (!_this.embeddedView) {
                         _this.createEmbeddedView();
                     }
                     _this.ViewContext.$complete = true;
-                }),
+                },
             };
             this.cdAware = createCdAware({
                 render: createRender({ cdRef: cdRef, ngZone: ngZone }),
@@ -429,35 +276,19 @@
             });
             this.subscription = this.cdAware.subscribe();
         }
-        /**
-         * @template U
-         * @param {?} dir
-         * @param {?} ctx
-         * @return {?}
-         */
         LetDirective.ngTemplateContextGuard = function (dir, ctx) {
             return true;
         };
         Object.defineProperty(LetDirective.prototype, "ngrxLet", {
-            /**
-             * @param {?} potentialObservable
-             * @return {?}
-             */
             set: function (potentialObservable) {
                 this.cdAware.nextPotentialObservable(potentialObservable);
             },
             enumerable: false,
             configurable: true
         });
-        /**
-         * @return {?}
-         */
         LetDirective.prototype.createEmbeddedView = function () {
             this.embeddedView = this.viewContainerRef.createEmbeddedView(this.templateRef, this.ViewContext);
         };
-        /**
-         * @return {?}
-         */
         LetDirective.prototype.ngOnDestroy = function () {
             this.subscription.unsubscribe();
             this.viewContainerRef.clear();
@@ -477,59 +308,8 @@
     LetDirective.propDecorators = {
         ngrxLet: [{ type: core.Input }]
     };
-    if (false) {
-        /** @type {?} */
-        LetDirective.ngTemplateGuard_ngrxLet;
-        /**
-         * @type {?}
-         * @private
-         */
-        LetDirective.prototype.embeddedView;
-        /**
-         * @type {?}
-         * @private
-         */
-        LetDirective.prototype.ViewContext;
-        /**
-         * @type {?}
-         * @protected
-         */
-        LetDirective.prototype.subscription;
-        /**
-         * @type {?}
-         * @private
-         */
-        LetDirective.prototype.cdAware;
-        /**
-         * @type {?}
-         * @private
-         */
-        LetDirective.prototype.resetContextObserver;
-        /**
-         * @type {?}
-         * @private
-         */
-        LetDirective.prototype.updateViewContextObserver;
-        /**
-         * @type {?}
-         * @private
-         */
-        LetDirective.prototype.templateRef;
-        /**
-         * @type {?}
-         * @private
-         */
-        LetDirective.prototype.viewContainerRef;
-    }
 
-    /**
-     * @fileoverview added by tsickle
-     * Generated from: src/reactive-component.module.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
     var DECLARATIONS = [LetDirective, PushPipe];
-    /** @type {?} */
     var EXPORTS = [DECLARATIONS];
     var ReactiveComponentModule = /** @class */ (function () {
         function ReactiveComponentModule() {
@@ -544,27 +324,13 @@
     ];
 
     /**
-     * @fileoverview added by tsickle
-     * Generated from: src/index.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * DO NOT EDIT
+     *
+     * This file is automatically generated at build
      */
 
     /**
-     * @fileoverview added by tsickle
-     * Generated from: public_api.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * Generated from: index.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * Generated from: ngrx-component.ts
-     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * Generated bundle index. Do not edit.
      */
 
     exports.LetDirective = LetDirective;
