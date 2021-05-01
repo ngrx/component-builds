@@ -223,7 +223,7 @@ class LetDirective {
     constructor(cdRef, ngZone, templateRef, viewContainerRef) {
         this.templateRef = templateRef;
         this.viewContainerRef = viewContainerRef;
-        this.ViewContext = {
+        this.viewContext = {
             $implicit: undefined,
             ngrxLet: undefined,
             $error: false,
@@ -233,10 +233,10 @@ class LetDirective {
             next: () => {
                 // if not initialized no need to set undefined
                 if (this.embeddedView) {
-                    this.ViewContext.$implicit = undefined;
-                    this.ViewContext.ngrxLet = undefined;
-                    this.ViewContext.$error = false;
-                    this.ViewContext.$complete = false;
+                    this.viewContext.$implicit = undefined;
+                    this.viewContext.ngrxLet = undefined;
+                    this.viewContext.$error = false;
+                    this.viewContext.$complete = false;
                 }
             },
         };
@@ -246,22 +246,22 @@ class LetDirective {
                 if (!this.embeddedView) {
                     this.createEmbeddedView();
                 }
-                this.ViewContext.$implicit = value;
-                this.ViewContext.ngrxLet = value;
+                this.viewContext.$implicit = value;
+                this.viewContext.ngrxLet = value;
             },
             error: (error) => {
                 // to have init lazy
                 if (!this.embeddedView) {
                     this.createEmbeddedView();
                 }
-                this.ViewContext.$error = true;
+                this.viewContext.$error = true;
             },
             complete: () => {
                 // to have init lazy
                 if (!this.embeddedView) {
                     this.createEmbeddedView();
                 }
-                this.ViewContext.$complete = true;
+                this.viewContext.$complete = true;
             },
         };
         this.cdAware = createCdAware({
@@ -278,7 +278,7 @@ class LetDirective {
         this.cdAware.nextPotentialObservable(potentialObservable);
     }
     createEmbeddedView() {
-        this.embeddedView = this.viewContainerRef.createEmbeddedView(this.templateRef, this.ViewContext);
+        this.embeddedView = this.viewContainerRef.createEmbeddedView(this.templateRef, this.viewContext);
     }
     ngOnDestroy() {
         this.subscription.unsubscribe();

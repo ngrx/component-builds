@@ -75,14 +75,14 @@ export interface LetViewContext<T> {
 export declare class LetDirective<U> implements OnDestroy {
     private readonly templateRef;
     private readonly viewContainerRef;
+    static ngTemplateGuard_ngrxLet: 'binding';
     private embeddedView;
-    private readonly ViewContext;
+    private readonly viewContext;
     protected readonly subscription: Unsubscribable;
     private readonly cdAware;
     private readonly resetContextObserver;
     private readonly updateViewContextObserver;
     static ngTemplateContextGuard<U>(dir: LetDirective<U>, ctx: unknown | null | undefined): ctx is LetViewContext<U>;
-    static ngTemplateGuard_ngrxLet: 'binding';
     set ngrxLet(potentialObservable: ObservableInput<U> | null | undefined);
     constructor(cdRef: ChangeDetectorRef, ngZone: NgZone, templateRef: TemplateRef<LetViewContext<U>>, viewContainerRef: ViewContainerRef);
     createEmbeddedView(): void;

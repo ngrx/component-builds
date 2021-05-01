@@ -228,7 +228,7 @@
             var _this = this;
             this.templateRef = templateRef;
             this.viewContainerRef = viewContainerRef;
-            this.ViewContext = {
+            this.viewContext = {
                 $implicit: undefined,
                 ngrxLet: undefined,
                 $error: false,
@@ -238,10 +238,10 @@
                 next: function () {
                     // if not initialized no need to set undefined
                     if (_this.embeddedView) {
-                        _this.ViewContext.$implicit = undefined;
-                        _this.ViewContext.ngrxLet = undefined;
-                        _this.ViewContext.$error = false;
-                        _this.ViewContext.$complete = false;
+                        _this.viewContext.$implicit = undefined;
+                        _this.viewContext.ngrxLet = undefined;
+                        _this.viewContext.$error = false;
+                        _this.viewContext.$complete = false;
                     }
                 },
             };
@@ -251,22 +251,22 @@
                     if (!_this.embeddedView) {
                         _this.createEmbeddedView();
                     }
-                    _this.ViewContext.$implicit = value;
-                    _this.ViewContext.ngrxLet = value;
+                    _this.viewContext.$implicit = value;
+                    _this.viewContext.ngrxLet = value;
                 },
                 error: function (error) {
                     // to have init lazy
                     if (!_this.embeddedView) {
                         _this.createEmbeddedView();
                     }
-                    _this.ViewContext.$error = true;
+                    _this.viewContext.$error = true;
                 },
                 complete: function () {
                     // to have init lazy
                     if (!_this.embeddedView) {
                         _this.createEmbeddedView();
                     }
-                    _this.ViewContext.$complete = true;
+                    _this.viewContext.$complete = true;
                 },
             };
             this.cdAware = createCdAware({
@@ -287,7 +287,7 @@
             configurable: true
         });
         LetDirective.prototype.createEmbeddedView = function () {
-            this.embeddedView = this.viewContainerRef.createEmbeddedView(this.templateRef, this.ViewContext);
+            this.embeddedView = this.viewContainerRef.createEmbeddedView(this.templateRef, this.viewContext);
         };
         LetDirective.prototype.ngOnDestroy = function () {
             this.subscription.unsubscribe();
