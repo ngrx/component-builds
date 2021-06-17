@@ -291,7 +291,6 @@
         };
         LetDirective.prototype.ngOnDestroy = function () {
             this.subscription.unsubscribe();
-            this.viewContainerRef.clear();
         };
         return LetDirective;
     }());

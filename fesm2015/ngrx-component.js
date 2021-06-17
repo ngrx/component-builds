@@ -282,7 +282,6 @@ class LetDirective {
     }
     ngOnDestroy() {
         this.subscription.unsubscribe();
-        this.viewContainerRef.clear();
     }
 }
 LetDirective.decorators = [
