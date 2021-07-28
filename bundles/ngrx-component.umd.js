@@ -38,6 +38,7 @@
             cfg.resetContextObserver.next();
             cfg.render();
             return ob$.pipe(operators.distinctUntilChanged(), operators.tap(cfg.updateViewContextObserver), operators.tap(function () { return cfg.render(); }), operators.catchError(function (e) {
+                cfg.errorHandler.handleError(e);
                 return rxjs.EMPTY;
             }));
         }));
@@ -124,7 +125,7 @@
      * @publicApi
      */
     var PushPipe = /** @class */ (function () {
-        function PushPipe(cdRef, ngZone) {
+        function PushPipe(cdRef, ngZone, errorHandler) {
             var _this = this;
             this.resetContextObserver = {
                 next: function () { return (_this.renderedValue = undefined); },
@@ -136,6 +137,7 @@
                 render: createRender({ cdRef: cdRef, ngZone: ngZone }),
                 updateViewContextObserver: this.updateViewContextObserver,
                 resetContextObserver: this.resetContextObserver,
+                errorHandler: errorHandler,
             });
             this.subscription = this.cdAware.subscribe();
         }
@@ -154,7 +156,8 @@
     /** @nocollapse */
     PushPipe.ctorParameters = function () { return [
         { type: core.ChangeDetectorRef },
-        { type: core.NgZone }
+        { type: core.NgZone },
+        { type: core.ErrorHandler }
     ]; };
 
     /**
@@ -224,7 +227,7 @@
      * @publicApi
      */
     var LetDirective = /** @class */ (function () {
-        function LetDirective(cdRef, ngZone, templateRef, viewContainerRef) {
+        function LetDirective(cdRef, ngZone, templateRef, viewContainerRef, errorHandler) {
             var _this = this;
             this.templateRef = templateRef;
             this.viewContainerRef = viewContainerRef;
@@ -273,6 +276,7 @@
                 render: createRender({ cdRef: cdRef, ngZone: ngZone }),
                 resetContextObserver: this.resetContextObserver,
                 updateViewContextObserver: this.updateViewContextObserver,
+                errorHandler: errorHandler,
             });
             this.subscription = this.cdAware.subscribe();
         }
@@ -302,7 +306,8 @@
         { type: core.ChangeDetectorRef },
         { type: core.NgZone },
         { type: core.TemplateRef },
-        { type: core.ViewContainerRef }
+        { type: core.ViewContainerRef },
+        { type: core.ErrorHandler }
     ]; };
     LetDirective.propDecorators = {
         ngrxLet: [{ type: core.Input }]

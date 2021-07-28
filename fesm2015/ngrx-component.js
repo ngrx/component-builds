@@ -1,4 +1,4 @@
-import { NgZone, Pipe, ChangeDetectorRef, Directive, TemplateRef, ViewContainerRef, Input, NgModule } from '@angular/core';
+import { NgZone, Pipe, ChangeDetectorRef, ErrorHandler, Directive, TemplateRef, ViewContainerRef, Input, NgModule } from '@angular/core';
 import { Subject, EMPTY, isObservable, from } from 'rxjs';
 import { distinctUntilChanged, switchMap, tap, catchError } from 'rxjs/operators';
 
@@ -36,6 +36,7 @@ function createCdAware(cfg) {
         cfg.resetContextObserver.next();
         cfg.render();
         return ob$.pipe(distinctUntilChanged(), tap(cfg.updateViewContextObserver), tap(() => cfg.render()), catchError((e) => {
+            cfg.errorHandler.handleError(e);
             return EMPTY;
         }));
     }));
@@ -122,7 +123,7 @@ function createRender(config) {
  * @publicApi
  */
 class PushPipe {
-    constructor(cdRef, ngZone) {
+    constructor(cdRef, ngZone, errorHandler) {
         this.resetContextObserver = {
             next: () => (this.renderedValue = undefined),
         };
@@ -133,6 +134,7 @@ class PushPipe {
             render: createRender({ cdRef, ngZone }),
             updateViewContextObserver: this.updateViewContextObserver,
             resetContextObserver: this.resetContextObserver,
+            errorHandler,
         });
         this.subscription = this.cdAware.subscribe();
     }
@@ -150,7 +152,8 @@ PushPipe.decorators = [
 /** @nocollapse */
 PushPipe.ctorParameters = () => [
     { type: ChangeDetectorRef },
-    { type: NgZone }
+    { type: NgZone },
+    { type: ErrorHandler }
 ];
 
 /**
@@ -220,7 +223,7 @@ PushPipe.ctorParameters = () => [
  * @publicApi
  */
 class LetDirective {
-    constructor(cdRef, ngZone, templateRef, viewContainerRef) {
+    constructor(cdRef, ngZone, templateRef, viewContainerRef, errorHandler) {
         this.templateRef = templateRef;
         this.viewContainerRef = viewContainerRef;
         this.viewContext = {
@@ -268,6 +271,7 @@ class LetDirective {
             render: createRender({ cdRef, ngZone }),
             resetContextObserver: this.resetContextObserver,
             updateViewContextObserver: this.updateViewContextObserver,
+            errorHandler,
         });
         this.subscription = this.cdAware.subscribe();
     }
@@ -292,7 +296,8 @@ LetDirective.ctorParameters = () => [
     { type: ChangeDetectorRef },
     { type: NgZone },
     { type: TemplateRef },
-    { type: ViewContainerRef }
+    { type: ViewContainerRef },
+    { type: ErrorHandler }
 ];
 LetDirective.propDecorators = {
     ngrxLet: [{ type: Input }]

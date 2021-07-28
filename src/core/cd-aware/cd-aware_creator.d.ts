@@ -1,3 +1,4 @@
+import { ErrorHandler } from '@angular/core';
 import { NextObserver, ObservableInput, Subscribable } from 'rxjs';
 export interface CdAware<U> extends Subscribable<U> {
     nextPotentialObservable: (value: ObservableInput<any> | null | undefined) => void;
@@ -15,4 +16,5 @@ export declare function createCdAware<U>(cfg: {
     render: () => void;
     resetContextObserver: NextObserver<void>;
     updateViewContextObserver: NextObserver<U | undefined | null>;
+    errorHandler: ErrorHandler;
 }): CdAware<U | undefined | null>;

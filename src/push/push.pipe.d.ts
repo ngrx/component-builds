@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, NgZone, OnDestroy, PipeTransform } from '@angular/core';
+import { ChangeDetectorRef, ErrorHandler, NgZone, OnDestroy, PipeTransform } from '@angular/core';
 import { ObservableInput } from 'rxjs';
 /**
  * @Pipe PushPipe
@@ -49,7 +49,7 @@ export declare class PushPipe<S> implements PipeTransform, OnDestroy {
     private readonly cdAware;
     private readonly resetContextObserver;
     private readonly updateViewContextObserver;
-    constructor(cdRef: ChangeDetectorRef, ngZone: NgZone);
+    constructor(cdRef: ChangeDetectorRef, ngZone: NgZone, errorHandler: ErrorHandler);
     transform<T>(potentialObservable: null): null;
     transform<T>(potentialObservable: undefined): undefined;
     transform<T>(potentialObservable: ObservableInput<T>): T | undefined;
