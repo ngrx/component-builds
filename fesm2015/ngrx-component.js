@@ -146,10 +146,17 @@ class PushPipe {
         this.subscription.unsubscribe();
     }
 }
+/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
 PushPipe.decorators = [
     { type: Pipe, args: [{ name: 'ngrxPush', pure: false },] }
 ];
-/** @nocollapse */
+/**
+ * @type {function(): !Array<(null|{
+ *   type: ?,
+ *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+ * })>}
+ * @nocollapse
+ */
 PushPipe.ctorParameters = () => [
     { type: ChangeDetectorRef },
     { type: NgZone },
@@ -288,10 +295,17 @@ class LetDirective {
         this.subscription.unsubscribe();
     }
 }
+/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
 LetDirective.decorators = [
     { type: Directive, args: [{ selector: '[ngrxLet]' },] }
 ];
-/** @nocollapse */
+/**
+ * @type {function(): !Array<(null|{
+ *   type: ?,
+ *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+ * })>}
+ * @nocollapse
+ */
 LetDirective.ctorParameters = () => [
     { type: ChangeDetectorRef },
     { type: NgZone },
@@ -299,6 +313,7 @@ LetDirective.ctorParameters = () => [
     { type: ViewContainerRef },
     { type: ErrorHandler }
 ];
+/** @type {!Object<string, !Array<{type: !Function, args: (undefined|!Array<?>)}>>} */
 LetDirective.propDecorators = {
     ngrxLet: [{ type: Input }]
 };
@@ -307,6 +322,7 @@ const DECLARATIONS = [LetDirective, PushPipe];
 const EXPORTS = [DECLARATIONS];
 class ReactiveComponentModule {
 }
+/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
 ReactiveComponentModule.decorators = [
     { type: NgModule, args: [{
                 declarations: [DECLARATIONS],

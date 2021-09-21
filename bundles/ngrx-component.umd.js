@@ -150,10 +150,17 @@
         };
         return PushPipe;
     }());
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     PushPipe.decorators = [
         { type: core.Pipe, args: [{ name: 'ngrxPush', pure: false },] }
     ];
-    /** @nocollapse */
+    /**
+     * @type {function(): !Array<(null|{
+     *   type: ?,
+     *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+     * })>}
+     * @nocollapse
+     */
     PushPipe.ctorParameters = function () { return [
         { type: core.ChangeDetectorRef },
         { type: core.NgZone },
@@ -298,10 +305,17 @@
         };
         return LetDirective;
     }());
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     LetDirective.decorators = [
         { type: core.Directive, args: [{ selector: '[ngrxLet]' },] }
     ];
-    /** @nocollapse */
+    /**
+     * @type {function(): !Array<(null|{
+     *   type: ?,
+     *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
+     * })>}
+     * @nocollapse
+     */
     LetDirective.ctorParameters = function () { return [
         { type: core.ChangeDetectorRef },
         { type: core.NgZone },
@@ -309,6 +323,7 @@
         { type: core.ViewContainerRef },
         { type: core.ErrorHandler }
     ]; };
+    /** @type {!Object<string, !Array<{type: !Function, args: (undefined|!Array<?>)}>>} */
     LetDirective.propDecorators = {
         ngrxLet: [{ type: core.Input }]
     };
@@ -320,6 +335,7 @@
         }
         return ReactiveComponentModule;
     }());
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
     ReactiveComponentModule.decorators = [
         { type: core.NgModule, args: [{
                     declarations: [DECLARATIONS],
