@@ -136,7 +136,7 @@ class PushPipe {
             resetContextObserver: this.resetContextObserver,
             errorHandler,
         });
-        this.subscription = this.cdAware.subscribe();
+        this.subscription = this.cdAware.subscribe({});
     }
     transform(potentialObservable) {
         this.cdAware.nextPotentialObservable(potentialObservable);
@@ -280,7 +280,7 @@ class LetDirective {
             updateViewContextObserver: this.updateViewContextObserver,
             errorHandler,
         });
-        this.subscription = this.cdAware.subscribe();
+        this.subscription = this.cdAware.subscribe({});
     }
     static ngTemplateContextGuard(dir, ctx) {
         return true;

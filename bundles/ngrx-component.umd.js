@@ -139,7 +139,7 @@
                 resetContextObserver: this.resetContextObserver,
                 errorHandler: errorHandler,
             });
-            this.subscription = this.cdAware.subscribe();
+            this.subscription = this.cdAware.subscribe({});
         }
         PushPipe.prototype.transform = function (potentialObservable) {
             this.cdAware.nextPotentialObservable(potentialObservable);
@@ -285,7 +285,7 @@
                 updateViewContextObserver: this.updateViewContextObserver,
                 errorHandler: errorHandler,
             });
-            this.subscription = this.cdAware.subscribe();
+            this.subscription = this.cdAware.subscribe({});
         }
         LetDirective.ngTemplateContextGuard = function (dir, ctx) {
             return true;
