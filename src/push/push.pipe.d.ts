@@ -43,7 +43,7 @@ import { ObservableInput } from 'rxjs';
  *
  * @publicApi
  */
-export declare class PushPipe<S> implements PipeTransform, OnDestroy {
+export declare class PushPipe implements PipeTransform, OnDestroy {
     private renderedValue;
     private readonly subscription;
     private readonly cdAware;
