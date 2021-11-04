@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, ErrorHandler, NgZone, OnDestroy, PipeTransform } from '@angular/core';
 import { ObservableInput } from 'rxjs';
+import * as i0 from "@angular/core";
 /**
  * @Pipe PushPipe
  *
@@ -54,4 +55,6 @@ export declare class PushPipe implements PipeTransform, OnDestroy {
     transform<T>(potentialObservable: undefined): undefined;
     transform<T>(potentialObservable: ObservableInput<T>): T | undefined;
     ngOnDestroy(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PushPipe, never>;
+    static ɵpipe: i0.ɵɵPipeDeclaration<PushPipe, "ngrxPush">;
 }

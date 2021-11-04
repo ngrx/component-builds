@@ -1,4 +1,5 @@
-import { NgZone, Pipe, ChangeDetectorRef, ErrorHandler, Directive, TemplateRef, ViewContainerRef, Input, NgModule } from '@angular/core';
+import * as i0 from '@angular/core';
+import { NgZone, Pipe, Directive, Input, NgModule } from '@angular/core';
 import { Subject, EMPTY, isObservable, from } from 'rxjs';
 import { distinctUntilChanged, switchMap, tap, catchError } from 'rxjs/operators';
 
@@ -146,22 +147,12 @@ class PushPipe {
         this.subscription.unsubscribe();
     }
 }
-/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-PushPipe.decorators = [
-    { type: Pipe, args: [{ name: 'ngrxPush', pure: false },] }
-];
-/**
- * @type {function(): !Array<(null|{
- *   type: ?,
- *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
- * })>}
- * @nocollapse
- */
-PushPipe.ctorParameters = () => [
-    { type: ChangeDetectorRef },
-    { type: NgZone },
-    { type: ErrorHandler }
-];
+/** @nocollapse */ PushPipe.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: PushPipe, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.NgZone }, { token: i0.ErrorHandler }], target: i0.ɵɵFactoryTarget.Pipe });
+/** @nocollapse */ PushPipe.ɵpipe = i0.ɵɵngDeclarePipe({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: PushPipe, name: "ngrxPush", pure: false });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: PushPipe, decorators: [{
+            type: Pipe,
+            args: [{ name: 'ngrxPush', pure: false }]
+        }], ctorParameters: function () { return [{ type: i0.ChangeDetectorRef }, { type: i0.NgZone }, { type: i0.ErrorHandler }]; } });
 
 /**
  * @Directive LetDirective
@@ -295,40 +286,29 @@ class LetDirective {
         this.subscription.unsubscribe();
     }
 }
-/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-LetDirective.decorators = [
-    { type: Directive, args: [{ selector: '[ngrxLet]' },] }
-];
-/**
- * @type {function(): !Array<(null|{
- *   type: ?,
- *   decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>),
- * })>}
- * @nocollapse
- */
-LetDirective.ctorParameters = () => [
-    { type: ChangeDetectorRef },
-    { type: NgZone },
-    { type: TemplateRef },
-    { type: ViewContainerRef },
-    { type: ErrorHandler }
-];
-/** @type {!Object<string, !Array<{type: !Function, args: (undefined|!Array<?>)}>>} */
-LetDirective.propDecorators = {
-    ngrxLet: [{ type: Input }]
-};
+/** @nocollapse */ LetDirective.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: LetDirective, deps: [{ token: i0.ChangeDetectorRef }, { token: i0.NgZone }, { token: i0.TemplateRef }, { token: i0.ViewContainerRef }, { token: i0.ErrorHandler }], target: i0.ɵɵFactoryTarget.Directive });
+/** @nocollapse */ LetDirective.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "12.0.0", version: "12.2.6", type: LetDirective, selector: "[ngrxLet]", inputs: { ngrxLet: "ngrxLet" }, ngImport: i0 });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: LetDirective, decorators: [{
+            type: Directive,
+            args: [{ selector: '[ngrxLet]' }]
+        }], ctorParameters: function () { return [{ type: i0.ChangeDetectorRef }, { type: i0.NgZone }, { type: i0.TemplateRef }, { type: i0.ViewContainerRef }, { type: i0.ErrorHandler }]; }, propDecorators: { ngrxLet: [{
+                type: Input
+            }] } });
 
 const DECLARATIONS = [LetDirective, PushPipe];
 const EXPORTS = [DECLARATIONS];
 class ReactiveComponentModule {
 }
-/** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-ReactiveComponentModule.decorators = [
-    { type: NgModule, args: [{
-                declarations: [DECLARATIONS],
-                exports: [EXPORTS],
-            },] }
-];
+/** @nocollapse */ ReactiveComponentModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: ReactiveComponentModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
+/** @nocollapse */ ReactiveComponentModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: ReactiveComponentModule, declarations: [LetDirective, PushPipe], exports: [LetDirective, PushPipe] });
+/** @nocollapse */ ReactiveComponentModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: ReactiveComponentModule });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.6", ngImport: i0, type: ReactiveComponentModule, decorators: [{
+            type: NgModule,
+            args: [{
+                    declarations: [DECLARATIONS],
+                    exports: [EXPORTS],
+                }]
+        }] });
 
 /**
  * DO NOT EDIT
