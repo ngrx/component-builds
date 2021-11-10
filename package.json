@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/common": "^13.0.0-rc.0",
-    "@angular/core": "^13.0.0-rc.0",
+    "@angular/common": "^13.0.0",
+    "@angular/core": "^13.0.0",
     "rxjs": "^6.5.3 || ^7.4.0"
   },
   "schematics": "./schematics/collection.json",
@@ -43,10 +43,23 @@
   "dependencies": {
     "tslib": "^2.0.0"
   },
-  "main": "bundles/ngrx-component.umd.js",
-  "module": "fesm2015/ngrx-component.js",
-  "es2015": "fesm2015/ngrx-component.js",
-  "esm2015": "esm2015/ngrx-component.js",
-  "fesm2015": "fesm2015/ngrx-component.js",
-  "typings": "ngrx-component.d.ts"
+  "module": "fesm2015/ngrx-component.mjs",
+  "es2020": "fesm2020/ngrx-component.mjs",
+  "esm2020": "esm2020/ngrx-component.mjs",
+  "fesm2020": "fesm2020/ngrx-component.mjs",
+  "fesm2015": "fesm2015/ngrx-component.mjs",
+  "typings": "ngrx-component.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./ngrx-component.d.ts",
+      "esm2020": "./esm2020/ngrx-component.mjs",
+      "es2020": "./fesm2020/ngrx-component.mjs",
+      "es2015": "./fesm2015/ngrx-component.mjs",
+      "node": "./fesm2015/ngrx-component.mjs",
+      "default": "./fesm2020/ngrx-component.mjs"
+    }
+  }
 }
