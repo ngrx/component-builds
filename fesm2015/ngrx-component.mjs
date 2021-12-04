@@ -81,7 +81,7 @@ function createRender(config) {
 }
 
 /**
- * @Pipe PushPipe
+ * @ngModule ReactiveComponentModule
  *
  * @description
  *
@@ -155,7 +155,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.0", ngImpor
         }], ctorParameters: function () { return [{ type: i0.ChangeDetectorRef }, { type: i0.NgZone }, { type: i0.ErrorHandler }]; } });
 
 /**
- * @Directive LetDirective
+ * @ngModule ReactiveComponentModule
  *
  * @description
  *
@@ -164,7 +164,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.0", ngImpor
  *
  * The current way of binding an observable to the view looks like that:
  * ```html
- * <ng-container *ngIf="observableNumber$ as n">
+ * <ng-container *ngIf="observableNumber$ | async as n">
  * <app-number [number]="n">
  * </app-number>
  * <app-number-special [number]="n">
@@ -175,12 +175,12 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.0.0", ngImpor
  *  The problem is `*ngIf` is also interfering with rendering and in case of a `0` the component would be hidden
  *
  * Included Features:
- * - binding is always present. (`*ngIf="truthy$"`)
+ * - binding is always present. (`*ngIf="truthy$ | async"`)
  * - it takes away the multiple usages of the `async` or `ngrxPush` pipe
  * - a unified/structured way of handling null and undefined
  * - triggers change-detection differently if `zone.js` is present or not (`ChangeDetectorRef.detectChanges` or `ChangeDetectorRef.markForCheck`)
  * - triggers change-detection differently if ViewEngine or Ivy is present (`ChangeDetectorRef.detectChanges` or `ɵdetectChanges`)
- * - distinct same values in a row (distinctUntilChanged operator),
+ * - distinct same values in a row (distinctUntilChanged operator)
  *
  * @usageNotes
  *

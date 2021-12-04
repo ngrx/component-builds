@@ -2,7 +2,7 @@ import { ChangeDetectorRef, ErrorHandler, NgZone, OnDestroy, PipeTransform } fro
 import { ObservableInput } from 'rxjs';
 import * as i0 from "@angular/core";
 /**
- * @Pipe PushPipe
+ * @ngModule ReactiveComponentModule
  *
  * @description
  *
