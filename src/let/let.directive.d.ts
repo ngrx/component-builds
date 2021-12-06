@@ -77,7 +77,7 @@ export declare class LetDirective<U> implements OnDestroy {
     private readonly templateRef;
     private readonly viewContainerRef;
     static ngTemplateGuard_ngrxLet: 'binding';
-    private embeddedView;
+    private isEmbeddedViewCreated;
     private readonly viewContext;
     protected readonly subscription: Unsubscribable;
     private readonly cdAware;
