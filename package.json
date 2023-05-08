@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/component",
-  "version": "13.1.0",
+  "version": "16.0.0-rc.0",
   "description": "Reactive Extensions for Angular Components",
   "repository": {
     "type": "git",
@@ -20,9 +20,9 @@
   },
   "homepage": "https://github.com/ngrx/platform#readme",
   "peerDependencies": {
-    "@angular/common": "^13.0.0",
-    "@angular/core": "^13.0.0",
-    "rxjs": "^6.5.3 || ^7.4.0"
+    "@angular/common": "^16.0.0",
+    "@angular/core": "^16.0.0",
+    "rxjs": "^6.5.3 || ^7.5.0"
   },
   "schematics": "./schematics/collection.json",
   "sideEffects": false,
@@ -44,23 +44,17 @@
   "dependencies": {
     "tslib": "^2.0.0"
   },
-  "module": "fesm2015/ngrx-component.mjs",
-  "es2020": "fesm2020/ngrx-component.mjs",
-  "esm2020": "esm2020/ngrx-component.mjs",
-  "fesm2020": "fesm2020/ngrx-component.mjs",
-  "fesm2015": "fesm2015/ngrx-component.mjs",
-  "typings": "ngrx-component.d.ts",
+  "module": "fesm2022/ngrx-component.mjs",
+  "typings": "index.d.ts",
   "exports": {
     "./package.json": {
       "default": "./package.json"
     },
     ".": {
-      "types": "./ngrx-component.d.ts",
-      "esm2020": "./esm2020/ngrx-component.mjs",
-      "es2020": "./fesm2020/ngrx-component.mjs",
-      "es2015": "./fesm2015/ngrx-component.mjs",
-      "node": "./fesm2015/ngrx-component.mjs",
-      "default": "./fesm2020/ngrx-component.mjs"
+      "types": "./index.d.ts",
+      "esm2022": "./esm2022/ngrx-component.mjs",
+      "esm": "./esm2022/ngrx-component.mjs",
+      "default": "./fesm2022/ngrx-component.mjs"
     }
   }
 }
