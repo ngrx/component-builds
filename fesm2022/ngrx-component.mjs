@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { NgZone, inject, Injectable, ChangeDetectorRef, Directive, Input, NgModule, Pipe } from '@angular/core';
+import { NgZone, inject, Injectable, ChangeDetectorRef, untracked, Directive, Input, NgModule, Pipe } from '@angular/core';
 import { isObservable, combineLatest, from, Observable, ReplaySubject, pipe, Subscription } from 'rxjs';
 import { distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
 
@@ -188,7 +188,7 @@ function switchMapToRenderEvent() {
         let reset = true;
         let synchronous = true;
         return new Observable((subscriber) => {
-            const subscription = observable$.subscribe({
+            const subscription = untracked(() => observable$.subscribe({
                 next(value) {
                     subscriber.next({ type: 'next', value, reset, synchronous });
                     reset = false;
@@ -201,7 +201,7 @@ function switchMapToRenderEvent() {
                     subscriber.next({ type: 'complete', reset, synchronous });
                     reset = false;
                 },
-            });
+            }));
             if (reset) {
                 subscriber.next({ type: 'suspense', reset, synchronous: true });
                 reset = false;
