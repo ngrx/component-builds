@@ -5,11 +5,11 @@ import * as i0 from "@angular/core";
  * @deprecated This module is deprecated in favor of the standalone `LetDirective`.
  */
 export class LetModule {
-    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.1.6", ngImport: i0, type: LetModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    /** @nocollapse */ static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "16.1.6", ngImport: i0, type: LetModule, imports: [LetDirective], exports: [LetDirective] }); }
-    /** @nocollapse */ static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "16.1.6", ngImport: i0, type: LetModule }); }
+    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.2.3", ngImport: i0, type: LetModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    /** @nocollapse */ static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "16.2.3", ngImport: i0, type: LetModule, imports: [LetDirective], exports: [LetDirective] }); }
+    /** @nocollapse */ static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "16.2.3", ngImport: i0, type: LetModule }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.1.6", ngImport: i0, type: LetModule, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.2.3", ngImport: i0, type: LetModule, decorators: [{
             type: NgModule,
             args: [{
                     imports: [LetDirective],

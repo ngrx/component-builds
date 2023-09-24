@@ -2,15 +2,15 @@ import { inject, Injectable, NgZone } from '@angular/core';
 import { isNgZone } from './zone-helpers';
 import * as i0 from "@angular/core";
 export class TickScheduler {
-    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.1.6", ngImport: i0, type: TickScheduler, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    /** @nocollapse */ static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "16.1.6", ngImport: i0, type: TickScheduler, providedIn: 'root', useFactory: () => {
+    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.2.3", ngImport: i0, type: TickScheduler, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
+    /** @nocollapse */ static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "16.2.3", ngImport: i0, type: TickScheduler, providedIn: 'root', useFactory: () => {
             const zone = inject(NgZone);
             return isNgZone(zone)
                 ? new NoopTickScheduler()
                 : inject(AnimationFrameTickScheduler);
         } }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.1.6", ngImport: i0, type: TickScheduler, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.2.3", ngImport: i0, type: TickScheduler, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -37,10 +37,10 @@ export class AnimationFrameTickScheduler extends TickScheduler {
             });
         }
     }
-    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.1.6", ngImport: i0, type: AnimationFrameTickScheduler, deps: [{ token: i0.ApplicationRef }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    /** @nocollapse */ static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "16.1.6", ngImport: i0, type: AnimationFrameTickScheduler, providedIn: 'root' }); }
+    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.2.3", ngImport: i0, type: AnimationFrameTickScheduler, deps: [{ token: i0.ApplicationRef }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    /** @nocollapse */ static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "16.2.3", ngImport: i0, type: AnimationFrameTickScheduler, providedIn: 'root' }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.1.6", ngImport: i0, type: AnimationFrameTickScheduler, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.2.3", ngImport: i0, type: AnimationFrameTickScheduler, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',

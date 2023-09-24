@@ -69,10 +69,10 @@ export class RenderScheduler {
         this.cdRef.markForCheck();
         this.tickScheduler.schedule();
     }
-    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.1.6", ngImport: i0, type: RenderScheduler, deps: [{ token: i0.ChangeDetectorRef }, { token: i1.TickScheduler }], target: i0.ɵɵFactoryTarget.Injectable }); }
-    /** @nocollapse */ static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "16.1.6", ngImport: i0, type: RenderScheduler }); }
+    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.2.3", ngImport: i0, type: RenderScheduler, deps: [{ token: i0.ChangeDetectorRef }, { token: i1.TickScheduler }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    /** @nocollapse */ static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "16.2.3", ngImport: i0, type: RenderScheduler }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.1.6", ngImport: i0, type: RenderScheduler, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.2.3", ngImport: i0, type: RenderScheduler, decorators: [{
             type: Injectable
         }], ctorParameters: function () { return [{ type: i0.ChangeDetectorRef }, { type: i1.TickScheduler }]; } });
 export function createRenderScheduler() {

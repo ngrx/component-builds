@@ -71,10 +71,10 @@ export class PushPipe {
             }
         }
     }
-    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.1.6", ngImport: i0, type: PushPipe, deps: [{ token: i0.ErrorHandler }], target: i0.ɵɵFactoryTarget.Pipe }); }
-    /** @nocollapse */ static { this.ɵpipe = i0.ɵɵngDeclarePipe({ minVersion: "14.0.0", version: "16.1.6", ngImport: i0, type: PushPipe, isStandalone: true, name: "ngrxPush", pure: false }); }
+    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "16.2.3", ngImport: i0, type: PushPipe, deps: [{ token: i0.ErrorHandler }], target: i0.ɵɵFactoryTarget.Pipe }); }
+    /** @nocollapse */ static { this.ɵpipe = i0.ɵɵngDeclarePipe({ minVersion: "14.0.0", version: "16.2.3", ngImport: i0, type: PushPipe, isStandalone: true, name: "ngrxPush", pure: false }); }
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.1.6", ngImport: i0, type: PushPipe, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "16.2.3", ngImport: i0, type: PushPipe, decorators: [{
             type: Pipe,
             args: [{
                     standalone: true,
