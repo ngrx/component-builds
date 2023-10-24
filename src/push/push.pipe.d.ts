@@ -3,8 +3,6 @@ import { PotentialObservableResult } from '../core/potential-observable';
 import * as i0 from "@angular/core";
 type PushPipeResult<PO> = PotentialObservableResult<PO, undefined>;
 /**
- * @ngModule PushModule
- *
  * @description
  *
  * The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.
