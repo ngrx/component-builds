@@ -22,7 +22,6 @@ export interface LetViewContext<PO> {
     complete: boolean;
 }
 /**
- * @ngModule LetModule
  *
  * @description
  *

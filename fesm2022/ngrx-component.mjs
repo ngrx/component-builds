@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { NgZone, inject, Injectable, ChangeDetectorRef, untracked, Directive, Input, NgModule, Pipe } from '@angular/core';
+import { NgZone, inject, Injectable, ChangeDetectorRef, untracked, Directive, Input, Pipe } from '@angular/core';
 import { isObservable, combineLatest, from, Observable, ReplaySubject, pipe, Subscription } from 'rxjs';
 import { distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
 
@@ -225,7 +225,6 @@ function renderEventComparator(previous, current) {
 }
 
 /**
- * @ngModule LetModule
  *
  * @description
  *
@@ -400,22 +399,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.0.0-next.8", 
             }] } });
 
 /**
- * @deprecated This module is deprecated in favor of the standalone `LetDirective`.
- */
-class LetModule {
-    /** @nocollapse */ static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.0.0-next.8", ngImport: i0, type: LetModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    /** @nocollapse */ static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "17.0.0-next.8", ngImport: i0, type: LetModule, imports: [LetDirective], exports: [LetDirective] }); }
-    /** @nocollapse */ static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "17.0.0-next.8", ngImport: i0, type: LetModule }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.0.0-next.8", ngImport: i0, type: LetModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    imports: [LetDirective],
-                    exports: [LetDirective],
-                }]
-        }] });
-
-/**
  * @description
  *
  * The `ngrxPush` pipe serves as a drop-in replacement for the `async` pipe.
@@ -504,5 +487,5 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.0.0-next.8", 
  * Generated bundle index. Do not edit.
  */
 
-export { LetDirective, LetModule, PushPipe, RenderScheduler };
+export { LetDirective, PushPipe, RenderScheduler };
 //# sourceMappingURL=ngrx-component.mjs.map
