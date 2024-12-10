@@ -387,7 +387,6 @@ class LetDirective {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.0", ngImport: i0, type: LetDirective, decorators: [{
             type: Directive,
             args: [{
-                    standalone: true,
                     selector: '[ngrxLet]',
                     providers: [RenderScheduler],
                 }]
@@ -471,7 +470,6 @@ class PushPipe {
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.0.0", ngImport: i0, type: PushPipe, decorators: [{
             type: Pipe,
             args: [{
-                    standalone: true,
                     name: 'ngrxPush',
                     pure: false,
                 }]
